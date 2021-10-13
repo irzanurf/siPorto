@@ -15,7 +15,8 @@
     </div>
 
     <!-- Jquery JS-->
-    <script src="<?= base_url('assets/main/vendor/jquery-3.2.1.min.js');?>"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- <script src="<?= base_url('assets/main/vendor/jquery-3.2.1.min.js');?>"></script> -->
     <!-- Bootstrap JS-->
     <script src="<?= base_url('assets/main/vendor/bootstrap-4.1/popper.min.js');?>"></script>
     <script src="<?= base_url('assets/main/vendor/bootstrap-4.1/bootstrap.min.js');?>"></script>
@@ -46,7 +47,7 @@
     $('#dataTable').DataTable();
     } );
     </script>
-
+    
 </body>
 
 </html>

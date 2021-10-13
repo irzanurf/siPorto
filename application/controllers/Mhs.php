@@ -19,6 +19,7 @@ class Mhs extends CI_Controller {
         $this->load->model('M_Akademik');
         $this->load->model('M_Prestasi');
         $this->load->model('M_Magang');
+        $this->load->model('M_Kompetensi');
         $this->load->model('M_Aktivitas');
         $this->load->model('M_Pengumuman');
         
@@ -69,10 +70,12 @@ class Mhs extends CI_Controller {
         $username = $this->session->userdata('username');
         $nik = $this->input->post('nik',true);
         $nama = $this->input->post('nama',true);
+        $konsentrasi = $this->input->post('konsentrasi',true);
         $angkatan = $this->input->post('angkatan',true);
         $tempat_lahir = $this->input->post('tempat_lahir',true);
         $tgl_lahir = $this->input->post('tgl_lahir',true);
         $alamat = $this->input->post('alamat',true);
+        $alamat_ortu = $this->input->post('alamat_ortu',true);
         $sso = $this->input->post('sso',true);
         $email = $this->input->post('email',true);
         $no_hp = $this->input->post('no_hp',true);
@@ -80,10 +83,12 @@ class Mhs extends CI_Controller {
         $data = [
             "nik"=>$nik,
             "nama"=>$nama,
+            "konsentrasi"=>$konsentrasi,
             "angkatan"=>$angkatan,
             "tempat_lahir"=>$tempat_lahir,
             "tgl_lahir"=>$tgl_lahir,
             "alamat"=>$alamat,
+            "alamat_ortu"=>$alamat_ortu,
             "sso"=>$sso,
             "email"=>$email,
             "no_hp"=>$no_hp,
@@ -124,6 +129,7 @@ class Mhs extends CI_Controller {
 
     public function form_semester($semester)
     {
+        $data['topik'] = array();
         $username = $this->session->userdata('username');
         $sem = [
             "mahasiswa"=>$username,
@@ -140,6 +146,13 @@ class Mhs extends CI_Controller {
             endif;
         endif;
         $id_portofolio = $this->M_Portofolio->get_portofolio($sem)->row()->id;
+        $get_id_portofolio = $this->M_Portofolio->get_all_id(array('mahasiswa'=>"$username"))->result();
+        foreach ($get_id_portofolio as $gip){
+            $get_id_magang = $this->M_Magang->getwhere_magang(array('id_portofolio'=>"$gip->id"))->result();
+            foreach ($get_id_magang as $gim){
+                array_push($data['topik'], "$gim->topik");
+            }
+        }
         $header['cek'] = "portofolio";
         $header['semester'] = $this->M_Portofolio->get_semester(array('mahasiswa'=>"$username"))->result();
         $header['profile'] = $this->M_Mahasiswa->get_profile(array ('nim'=>"$username"))->row();
@@ -150,6 +163,7 @@ class Mhs extends CI_Controller {
         $data['prestasi'] = $this->M_Prestasi->getwhere_prestasi(array('id_portofolio'=>"$id_portofolio"))->result();
         $data['magang'] = $this->M_Magang->getwhere_magang(array('id_portofolio'=>"$id_portofolio"))->result();
         $data['aktivitas'] = $this->M_Aktivitas->getwhere_aktivitas(array('id_portofolio'=>"$id_portofolio"))->result();
+        $data['kompetensi'] = $this->M_Kompetensi->getwhere_kompetensi(array('id_portofolio'=>"$id_portofolio"))->result();
         $this->load->view('layout/header_mhs', $header);
         $this->load->view('mhs/portofolio_semester', $data);
         $this->load->view("layout/footer");
@@ -224,7 +238,8 @@ class Mhs extends CI_Controller {
         $penyelenggara = $this->input->post('penyelenggara',true);
         $judul = $this->input->post('judul',true);
         $dosbing = $this->input->post('dosbing',true);
-        $tahun = $this->input->post('tahun',true);
+        $tgl_awal = $this->input->post('tgl_awal',true);
+        $tgl_akhir = $this->input->post('tgl_akhir',true);
         $tingkat = $this->input->post('tingkat',true);
         $prestasi = $this->input->post('prestasi',true);
         
@@ -234,7 +249,8 @@ class Mhs extends CI_Controller {
             "penyelenggara"=>$penyelenggara,
             "judul"=>$judul,
             "dosbing"=>$dosbing,
-            "tahun"=>$tahun,
+            "tgl_awal"=>$tgl_awal,
+            "tgl_akhir"=>$tgl_akhir,
             "tingkat"=>$tingkat,
             "prestasi"=>$prestasi,
         ];
@@ -275,6 +291,24 @@ class Mhs extends CI_Controller {
             "foto"=>$foto,];
             $this->M_Prestasi->update_prestasi($datafoto,$id_prestasi);
         }
+        $surat = $_FILES['surat'];
+        if(empty($surat['name'])){}
+            else{
+            $config3['upload_path'] = './assets/surat';
+            $config3['encrypt_name'] = TRUE;
+            $config3['allowed_types'] = 'pdf';
+
+            $this->load->library('upload',$config3,'surat');
+            $this->surat->initialize($config3);
+            if(!$this->surat->do_upload('surat')){
+                echo "Upload Gagal"; die();
+            } else {
+                $surat=$this->surat->data('file_name');
+            }
+            $datasurat = [
+            "surat"=>$surat,];
+            $this->M_Prestasi->update_prestasi($datasurat,$id_prestasi);
+        }
         redirect (base_url("Mhs/form_semester"."/"."$semester")); 
     }
 
@@ -286,11 +320,36 @@ class Mhs extends CI_Controller {
         redirect (base_url("Mhs/form_semester"."/"."$semester")); 
     }
 
+    public function checkTopik()
+    {
+        $topik = $this->input->get('topik');
+        $username = $this->input->get('username');
+        $get_id_portofolio = $this->M_Portofolio->get_all_id(array('mahasiswa'=>"$username"))->result();
+        foreach ($get_id_portofolio as $gip){
+            $id = $gip->id;
+            $check_topik = $this->M_Magang->check_topik($id, $topik)->row();
+            if(empty($check_topik)){
+                $data['cek'] = "empty";
+                $data['id'] = NULL;
+            }
+            else{
+                $data['cek'] = "exist";
+                $data['id'] = $check_topik->id;
+                break;
+            }
+        }
+        echo json_encode($data);
+        
+    }
+
     public function insert_magang()
     {
         $username = $this->session->userdata('username');
+        $id = $this->input->post('id',true);
         $semester = $this->input->post('semester',true);
         $id_portofolio = $this->input->post('id_portofolio',true);
+        $kategori = $this->input->post('kategori',true);
+        $merdeka = $this->input->post('merdeka',true);
         $nama = $this->input->post('nama',true);
         $alamat = $this->input->post('alamat',true);
         $tgl_awal = $this->input->post('tgl_awal',true);
@@ -298,53 +357,80 @@ class Mhs extends CI_Controller {
         $posisi = $this->input->post('posisi',true);
         $topik = $this->input->post('topik',true);
         $dosbing = $this->input->post('dosbing',true);
-        
-        $data = [
-            "id_portofolio"=>$id_portofolio,
-            "nama"=>$nama,
-            "alamat"=>$alamat,
-            "tgl_awal"=>$tgl_awal,
-            "tgl_akhir"=>$tgl_akhir,
-            "posisi"=>$posisi,
-            "topik"=>$topik,
-            "dosbing"=>$dosbing,
-        ];
-        $id_magang = $this->M_Magang->insert_magang($data);
-        $sertifikat = $_FILES['sertifikat'];
-        if(empty($sertifikat['name'])){}
+
+        if (empty($id)){
+            $data = [
+                "id_portofolio"=>$id_portofolio,
+                "kategori"=>$kategori,
+                "merdeka"=>$merdeka,
+                "nama"=>$nama,
+                "alamat"=>$alamat,
+                "tgl_awal"=>$tgl_awal,
+                "tgl_akhir"=>$tgl_akhir,
+                "posisi"=>$posisi,
+                "topik"=>$topik,
+                "dosbing"=>$dosbing,
+            ];
+            $id_magang = $this->M_Magang->insert_magang($data);
+        }
+
+        else {
+            $id_magang = $id;
+        }
+
+        $proposal = $_FILES['proposal'];
+        if(empty($proposal['name'])){}
             else{
-            $config1['upload_path'] = './assets/sertifikat';
+            $config1['upload_path'] = './assets/pendamping';
             $config1['encrypt_name'] = TRUE;
             $config1['allowed_types'] = 'pdf';
 
-            $this->load->library('upload',$config1,'sertifikat');
-            $this->sertifikat->initialize($config1);
-            if(!$this->sertifikat->do_upload('sertifikat')){
+            $this->load->library('upload',$config1,'proposal');
+            $this->proposal->initialize($config1);
+            if(!$this->proposal->do_upload('proposal')){
                 echo "Upload Gagal"; die();
             } else {
-                $sertifikat=$this->sertifikat->data('file_name');
+                $proposal=$this->proposal->data('file_name');
             }
-            $datasertifikat = [
-            "sertifikat"=>$sertifikat,];
-            $this->M_Magang->update_magang($datasertifikat,$id_magang);
+            $datafile = [
+            "proposal"=>$proposal,];
+            $this->M_Magang->update_magang($datafile,$id_magang);
         }
-        $foto = $_FILES['foto'];
-        if(empty($foto['name'])){}
+        $bukti = $_FILES['bukti'];
+        if(empty($bukti['name'])){}
             else{
-            $config2['upload_path'] = './assets/foto';
+            $config2['upload_path'] = './assets/pendamping';
             $config2['encrypt_name'] = TRUE;
-            $config2['allowed_types'] = 'gif|jpg|png|jpeg';
+            $config2['allowed_types'] = 'pdf';
 
-            $this->load->library('upload',$config2,'foto');
-            $this->foto->initialize($config2);
-            if(!$this->foto->do_upload('foto')){
+            $this->load->library('upload',$config2,'bukti');
+            $this->bukti->initialize($config2);
+            if(!$this->bukti->do_upload('bukti')){
                 echo "Upload Gagal"; die();
             } else {
-                $foto=$this->foto->data('file_name');
+                $bukti=$this->bukti->data('file_name');
             }
-            $datafoto = [
-            "foto"=>$foto,];
-            $this->M_Magang->update_magang($datafoto,$id_magang);
+            $datafile = [
+            "bukti"=>$bukti,];
+            $this->M_Magang->update_magang($datafile,$id_magang);
+        }
+        $laporan = $_FILES['laporan'];
+        if(empty($laporan['name'])){}
+            else{
+            $config3['upload_path'] = './assets/pendamping';
+            $config3['encrypt_name'] = TRUE;
+            $config3['allowed_types'] = 'pdf';
+
+            $this->load->library('upload',$config3,'laporan');
+            $this->laporan->initialize($config3);
+            if(!$this->laporan->do_upload('laporan')){
+                echo "Upload Gagal"; die();
+            } else {
+                $laporan=$this->laporan->data('file_name');
+            }
+            $datafile = [
+            "laporan"=>$laporan,];
+            $this->M_Magang->update_magang($datafile,$id_magang);
         }
         redirect (base_url("Mhs/form_semester"."/"."$semester")); 
     }
@@ -362,6 +448,8 @@ class Mhs extends CI_Controller {
         $username = $this->session->userdata('username');
         $semester = $this->input->post('semester',true);
         $id_portofolio = $this->input->post('id_portofolio',true);
+        $klasifikasi = $this->input->post('klasifikasi', true);
+        $tingkat = $this->input->post('tingkat', true);
         $nama = $this->input->post('nama',true);
         $jabatan = $this->input->post('jabatan',true);
         $tgl_awal = $this->input->post('tgl_awal',true);
@@ -369,6 +457,8 @@ class Mhs extends CI_Controller {
         
         $data = [
             "id_portofolio"=>$id_portofolio,
+            "klasifikasi"=>$klasifikasi,
+            "tingkat"=>$tingkat,
             "nama"=>$nama,
             "jabatan"=>$jabatan,
             "tgl_awal"=>$tgl_awal,
@@ -410,8 +500,9 @@ class Mhs extends CI_Controller {
             $datafoto = [
             "foto"=>$foto,];
             $this->M_Aktivitas->update_aktivitas($datafoto,$id_aktivitas);
+             
         }
-        redirect (base_url("Mhs/form_semester"."/"."$semester")); 
+        redirect (base_url("Mhs/form_semester"."/"."$semester"));
     }
 
     public function delete_aktivitas()
@@ -419,6 +510,57 @@ class Mhs extends CI_Controller {
         $id = $this->input->post('id');
         $semester = $this->input->post('semester');
         $this->M_Aktivitas->del_aktivitas(array('id'=>$id));
+        redirect (base_url("Mhs/form_semester"."/"."$semester")); 
+    }
+
+    public function insert_kompetensi()
+    {
+        $username = $this->session->userdata('username');
+        $semester = $this->input->post('semester',true);
+        $id_portofolio = $this->input->post('id_portofolio',true);
+        $nama = $this->input->post('nama', true);
+        $rumpun = $this->input->post('rumpun', true);
+        $nomor = $this->input->post('nomor',true);
+        $penerbit = $this->input->post('penerbit',true);
+        $tgl = $this->input->post('tgl',true);
+        
+        $data = [
+            "id_portofolio"=>$id_portofolio,
+            "nama"=>$nama,
+            "rumpun"=>$rumpun,
+            "nomor"=>$nomor,
+            "penerbit"=>$penerbit,
+            "tgl"=>$tgl,
+        ];
+        $id_kompetensi = $this->M_Kompetensi->insert_kompetensi($data);
+        $sertifikat = $_FILES['sertifikat'];
+        if(empty($sertifikat['name'])){}
+            else{
+            $config1['upload_path'] = './assets/sertifikat';
+            $config1['encrypt_name'] = TRUE;
+            $config1['allowed_types'] = 'pdf';
+
+            $this->load->library('upload',$config1,'sertifikat');
+            $this->sertifikat->initialize($config1);
+            if(!$this->sertifikat->do_upload('sertifikat')){
+                echo "Upload Gagal"; die();
+            } else {
+                $sertifikat=$this->sertifikat->data('file_name');
+            }
+            $datasertifikat = [
+            "sertifikat"=>$sertifikat,];
+            $this->M_Kompetensi->update_kompetensi($datasertifikat,$id_kompetensi);
+        }
+        
+            redirect (base_url("Mhs/form_semester"."/"."$semester")); 
+        
+    }
+
+    public function delete_kompetensi()
+    {
+        $id = $this->input->post('id');
+        $semester = $this->input->post('semester');
+        $this->M_Kompetensi->del_kompetensi(array('id'=>$id));
         redirect (base_url("Mhs/form_semester"."/"."$semester")); 
     }
 

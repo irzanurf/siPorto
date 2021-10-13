@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Teknik Elektro">
     <meta name="author" content="TE">
-    <meta name="keywords" content="siporto">
+    <meta name="keywords" content="sitomas">
 
     <!-- Title Page-->
-    <title>SiPorto</title>
+    <title>SiTomas</title>
 
     <!-- Fontfaces CSS-->
     <link href="<?= base_url('assets/main/css/font-face.css');?>" rel="stylesheet" media="all">
@@ -46,7 +46,7 @@
                 <div class="header4-wrap">
                     <div class="header__logo">
                         <a href="#">
-                            <img src="<?= base_url('assets/main/images/icon/logo-blue.png');?>" alt="CoolAdmin" />
+                            <img src="<?= base_url('assets/main/images/icon/logo-blue.png');?>" alt="logo" width="250" height="75" />
                         </a>
                     </div>
                     <div class="header__tool">

@@ -16,7 +16,7 @@
                                                 <img src="<?= base_url('assets/fotoProfile');?>/<?=$diri->profile?>" alt="profile" width="150" height="200"/><hr>
                                                 <?php endif; ?>
                                                 <input type="file" accept="image/*" name="profile" ><br>
-                                                <label style="color:red; font-size:12px;">File gambar maks 10mb</label>
+                                                <label style="color:red; font-size:12px;">File gambar maks 1mb</label>
                                                 </div>
                                         </div><hr>
                                         <div class="form-row">
@@ -37,11 +37,17 @@
                                                 <div class="col-md-4 mb-3">
                                                     <label>Program Studi</label>
                                                     <input class="form-control" name="fakultas" value="Teknik Elektro" disabled>
-                                                    </select>
                                                 </div>
                                                 <div class="col-md-4 mb-3">
-                                                    <label>Dosen Wali</label>
-                                                    <textarea class="form-control" disabled><?=$diri->doswal?></textarea>
+                                                    <label>Konsentrasi</label>
+                                                        <select class="form-control" name="konsentrasi" value="<?=$diri->konsentrasi?>">
+                                                            <option value="-">-</option>
+                                                            <option value="Teknik Tenaga Listrik"<?php echo ($diri->konsentrasi=="Teknik Tenaga Listrik") ? "selected='selected'" : "" ?>>Teknik Tenaga Listrik</option>
+                                                            <option value="Teknik Telekomunikasi"<?php echo ($diri->konsentrasi=="Teknik Telekomunikasi") ? "selected='selected'" : "" ?>>Teknik Telekomunikasi</option>
+                                                            <option value="Elektronika"<?php echo ($diri->konsentrasi=="Elektronika") ? "selected='selected'" : "" ?>>Elektronika</option>
+                                                            <option value="Kontrol dan Instrumentasi"<?php echo ($diri->konsentrasi=="Kontrol dan Instrumentasi") ? "selected='selected'" : "" ?>>Kontrol dan Instrumentasi</option>
+                                                            <option value="Teknologi Informasi"<?php echo ($diri->konsentrasi=="Teknologi Informasi") ? "selected='selected'" : "" ?>>Teknologi Informasi</option>
+                                                        </select>
                                                 </div>
                                                 <div class="col-md-4 mb-3">
                                                     <label>Angkatan</label>
@@ -55,6 +61,10 @@
                                         </div><br>
                                         <div class="form-row">
                                                 <div class="col-md-4 mb-3">
+                                                    <label>Dosen Wali</label>
+                                                    <textarea class="form-control" disabled><?=$diri->doswal?></textarea>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
                                                     <label>Tempat Lahir</label>
                                                     <textarea name="tempat_lahir" class="form-control" ><?=$diri->tempat_lahir?></textarea>
                                                 </div>
@@ -62,9 +72,19 @@
                                                     <label>Tanggal Lahir</label>
                                                     <input type="date" name="tgl_lahir" class="form-control" value="<?=$diri->tgl_lahir?>" >
                                                 </div>
+                                        </div><br>
+                                        <div class="form-row">
                                                 <div class="col-md-4 mb-3">
                                                     <label>Alamat</label>
                                                     <textarea name="alamat" class="form-control" ><?=$diri->alamat?></textarea>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label>Alamat Orang Tua/Wali</label>
+                                                    <textarea name="alamat_ortu" class="form-control" ><?=$diri->alamat_ortu?></textarea>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label>No. HP (WA)</label>
+                                                    <input type="number" name="no_hp" class="form-control" value="<?=$diri->no_hp?>" >
                                                 </div>
                                         </div><br>
                                         <div class="form-row">
@@ -75,10 +95,6 @@
                                                 <div class="col-md-4 mb-3">
                                                     <label>Email Pribadi</label>
                                                     <input name="email" class="form-control" value="<?=$diri->email?>" >
-                                                </div>
-                                                <div class="col-md-4 mb-3">
-                                                    <label>No. HP</label>
-                                                    <input type="number" name="no_hp" class="form-control" value="<?=$diri->no_hp?>" >
                                                 </div>
                                         </div>
                                         <br><button class="btn btn-success" type="submit">Submit</button>

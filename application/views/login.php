@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>SiPorto</title>
+    <title>SiTomas</title>
     <link rel="icon" href="<?= base_url('assets/undip.png');?>" type="image/x-icon'">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="<?= base_url('assets/login/images/fav.jpg'); ?>">
@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-12 loginform">
-                                 <h4>Welcome SiPorto</h4>                   
+                                 <h4>Welcome to SiTomas</h4>                   
                                  <p>Teknik Elektro</p>
                                  <form class="form-signin" method="POST" action="<?= base_url('Welcome/login'); ?>">
                                  <div class="login-det">

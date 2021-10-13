@@ -36,8 +36,8 @@
                                                     <input class="form-control" value="Teknik Elektro" disabled>
                                                 </div>
                                                 <div class="col-md-4 mb-3">
-                                                    <label>Dosen Wali</label>
-                                                    <textarea class="form-control" disabled><?=$diri->doswal?></textarea>
+                                                    <label>Konsentrasi</label>
+                                                    <input class="form-control" value="<?=$diri->konsentrasi?>" disabled>
                                                 </div>
                                                 <div class="col-md-4 mb-3">
                                                     <label>Angkatan</label>
@@ -45,6 +45,10 @@
                                                 </div>
                                         </div><br>
                                         <div class="form-row">
+                                                <div class="col-md-4 mb-3">
+                                                    <label>Dosen Wali</label>
+                                                    <textarea class="form-control" disabled><?=$diri->doswal?></textarea>
+                                                </div>
                                                 <div class="col-md-4 mb-3">
                                                     <label>Tempat Lahir</label>
                                                     <input class="form-control" value="<?=$diri->tempat_lahir?>" disabled>
@@ -58,9 +62,19 @@
                                                     endif; ?>
                                                     <input class="form-control" value="<?=$tgl_lahir?>" disabled>
                                                 </div>
+                                        </div><br>
+                                        <div class="form-row">
                                                 <div class="col-md-4 mb-3">
                                                     <label>Alamat</label>
                                                     <textarea class="form-control" disabled><?=$diri->alamat?></textarea>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label>Alamat Orang Tua/Wali</label>
+                                                    <textarea class="form-control" disabled><?=$diri->alamat_ortu?></textarea>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label>No. HP (WA)</label>
+                                                    <input class="form-control" value="<?=$diri->no_hp?>" disabled>
                                                 </div>
                                         </div><br>
                                         <div class="form-row">
@@ -71,10 +85,6 @@
                                                 <div class="col-md-4 mb-3">
                                                     <label>Email Pribadi</label>
                                                     <input class="form-control" value="<?=$diri->email?>" disabled>
-                                                </div>
-                                                <div class="col-md-4 mb-3">
-                                                    <label>No. HP</label>
-                                                    <input class="form-control" value="<?=$diri->no_hp?>" disabled>
                                                 </div>
                                         </div>
                                     </div>

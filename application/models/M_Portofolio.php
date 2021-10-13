@@ -14,6 +14,15 @@ class M_Portofolio extends CI_Model
         return $query;
     }
 
+    public function get_all_id(array $data)
+    {
+        $query = $this->db->select('id')
+        ->from('tb_portofolio')
+        ->where($data)
+        ->get();
+        return $query;
+    }
+
     public function cek_semester(array $data)
     {
         $query = $this->db->select('*')

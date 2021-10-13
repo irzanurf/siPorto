@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Teknik Elektro">
     <meta name="author" content="TE">
-    <meta name="keywords" content="siporto">
+    <meta name="keywords" content="sitomas">
 
     <!-- Title Page-->
-    <title>SiPorto</title>
+    <title>SiTomas</title>
 
     <!-- Fontfaces CSS-->
     <link href="<?= base_url('assets/main/css/font-face.css');?>" rel="stylesheet" media="all">
@@ -44,7 +44,7 @@
         <aside class="menu-sidebar2">
             <div class="logo">
                 <a href="#">
-                    <img src="<?= base_url('assets/main/images/icon/logo-white.png');?>" alt="Cool Admin" />
+                    <img src="<?= base_url('assets/main/images/icon/logo-white.png');?>" alt="logo" width="250" height="75"/>
                 </a>
             </div>
             <div class="menu-sidebar2__content js-scrollbar1">
@@ -103,7 +103,7 @@
                                 </div>
                             <div class="logo d-block d-lg-none">
                                 <a href="#">
-                                    <img src="<?= base_url('assets/main/images/icon/logo-white.png');?>" alt="CoolAdmin" />
+                                    <img src="<?= base_url('assets/main/images/icon/logo-white.png');?>" alt="logo" width="250" height="75"/>
                                 </a>
                             </div>
                             <div class="header-button2">
@@ -133,7 +133,7 @@
             <aside class="menu-sidebar2 js-right-sidebar d-block d-lg-none">
                 <div class="logo">
                     <a href="#">
-                        <img src="<?= base_url('assets/main/images/icon/logo-white.png');?>" alt="Cool Admin" />
+                        <img src="<?= base_url('assets/main/images/icon/logo-white.png');?>" alt="logo" width="250" height="75"/>
                     </a>
                 </div>
                 <div class="menu-sidebar2__content js-scrollbar2">

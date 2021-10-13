@@ -19,6 +19,7 @@ class Dsn extends CI_Controller {
         $this->load->model('M_Portofolio');
         $this->load->model('M_Akademik');
         $this->load->model('M_Prestasi');
+        $this->load->model('M_Kompetensi');
         $this->load->model('M_Magang');
         $this->load->model('M_Aktivitas');
         $this->load->model('M_Pengumuman');
@@ -88,6 +89,7 @@ class Dsn extends CI_Controller {
         $data['akademik'] = $this->M_Akademik->getwhere_akademik(array('id_portofolio'=>"$id_portofolio"))->row();
         $data['prestasi'] = $this->M_Prestasi->getwhere_prestasi(array('id_portofolio'=>"$id_portofolio"))->result();
         $data['magang'] = $this->M_Magang->getwhere_magang(array('id_portofolio'=>"$id_portofolio"))->result();
+        $data['kompetensi'] = $this->M_Kompetensi->getwhere_kompetensi(array('id_portofolio'=>"$id_portofolio"))->result();
         $data['aktivitas'] = $this->M_Aktivitas->getwhere_aktivitas(array('id_portofolio'=>"$id_portofolio"))->result();
         $this->load->view('layout/header_dsn', $header);
         $this->load->view('dsn/portofolio_semester', $data);

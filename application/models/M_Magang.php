@@ -13,6 +13,17 @@ class M_Magang extends CI_Model
         return $query;
     }
 
+    public function check_topik($id, $topik)
+    {
+        $query = $this->db->select('tb_magang.*, tb_dosen.nama as dosbing')
+        ->from('tb_magang')
+        ->join('tb_dosen','tb_magang.dosbing=tb_dosen.nip','inner')
+        ->where('id_portofolio', $id)
+        ->where('topik', $topik)
+        ->get();
+        return $query;
+    }
+
     public function insert_magang($data)
     {
         $this->db->insert('tb_magang',$data);
