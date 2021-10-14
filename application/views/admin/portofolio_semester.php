@@ -10,16 +10,16 @@
                                     <div style="text-align: center">
                                         <ul class="nav nav-pills nav-fill" id="pills-tab" role="tablist">
                                         <li class="nav-item col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                                                <a class="nav-link active" id="pills-akademik-tab" data-toggle="pill" href="#pills-akademik" role="tab" aria-controls="pills-akademik" aria-selected="false">Akademik</a>
+                                                <a class="nav-link active" id="pills-akademik-tab" data-toggle="pill" href="#pills-akademik" role="tab" aria-controls="pills-akademik" aria-selected="false">Hasil Studi</a>
                                             </li>
                                             <li class="nav-item col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                                 <a class="nav-link" id="pills-prestasi-tab" data-toggle="pill" href="#pills-prestasi" role="tab" aria-controls="pills-prestasi" aria-selected="false">Prestasi</a>
                                             </li>
                                             <li class="nav-item col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                                                <a class="nav-link" id="pills-kegiatan-tab" data-toggle="pill" href="#pills-kegiatan" role="tab" aria-controls="pills-kegiatan" aria-selected="false">Kegiatan Mahasiswa</a>
+                                                <a class="nav-link" id="pills-kegiatan-tab" data-toggle="pill" href="#pills-kegiatan" role="tab" aria-controls="pills-kegiatan" aria-selected="false">Kegiatan Organisasi</a>
                                             </li>
                                             <li class="nav-item col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                                <a class="nav-link" id="pills-magang-tab" data-toggle="pill" href="#pills-magang" role="tab" aria-controls="pills-magang" aria-selected="false">Kampus Merdeka</a>
+                                                <a class="nav-link" id="pills-magang-tab" data-toggle="pill" href="#pills-magang" role="tab" aria-controls="pills-magang" aria-selected="false">Kegiatan Akademik</a>
                                             </li>
                                             <li class="nav-item col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                                 <a class="nav-link" id="pills-kompetensi-tab" data-toggle="pill" href="#pills-kompetensi" role="tab" aria-controls="pills-kompetensi" aria-selected="false">Kompetensi Mahasiswa</a>
@@ -29,7 +29,7 @@
                                             <div class="tab-pane fade show active" id="pills-akademik" role="tabpanel" aria-labelledby="pills-akademik-tab">
                                                 <div class="card" style="padding-top:10px">
                                                     <div class="card-header">
-                                                        <h5>Form Akademik Kuliah</h5>
+                                                        <h5>Form Hasil Studi</h5>
                                                     </div>
                                                     <div class="card-body">
                                                         <form class="needs-validation" method="post" action="<?= base_url('Admin/update_akademik');?>" enctype="multipart/form-data">
@@ -126,57 +126,25 @@
                                                                         foreach($prestasi as $p) { 
                                                                             $awal = date('d-m-Y', strtotime($p->tgl_awal));
                                                                             $akhir = date('d-m-Y', strtotime($p->tgl_akhir));?>
+                                                                          
                                                                             <script type="text/javascript"> 
-                                                                            $(document).ready(function(){
-                                                                                var id<?=$p->id?> = $('#id_prestasi<?=$p->id?>').val();
-                                                                                if(id<?=$p->id?> != ''){
-                                                                                    $.ajax({
-                                                                                        url:"<?= base_url('Admin/checkStatusPrestasi');?>",
-                                                                                        method:"POST",
-                                                                                        data:{id:id<?=$p->id?>},
-                                                                                        dataType: 'json',
-                                                                                        success:function(data){
-                                                                                            $('#status_prestasi<?=$p->id?>').val(data.status);
-                                                                                            if (data.status==1){
-                                                                                                $("#ver_image_prestasi<?=$p->id?>").attr("src","<?= base_url('assets/ver1.svg');?>");
-                                                                                                $("#ver_button_prestasi<?=$p->id?>").tooltip().attr('data-original-title', "Verified");
-                                                                                            }
-                                                                                            else{
-                                                                                                $("#ver_image_prestasi<?=$p->id?>").attr("src","<?= base_url('assets/ver0.svg');?>");
-                                                                                                $("#ver_button_prestasi<?=$p->id?>").tooltip().attr('data-original-title', "Belum ter-verifikasi");
-                                                                                            }
-                                                                                        }
-                                                                                    });
-                                                                                }
-                                                                                });
-                                                                        </script>    
-                                                                        <script type="text/javascript"> 
-                                                                            $(document).ready(function(){
-                                                                                $('#ver_button_prestasi<?=$p->id?>').click(function(){
-                                                                                var id<?=$p->id?> = $('#id_prestasi<?=$p->id?>').val();
-                                                                                var status<?=$p->id?> = $('#status_prestasi<?=$p->id?>').val();
-                                                                                if(id<?=$p->id?> != ''){
+                                                                                $(document).ready(function(){
+                                                                                    $("#verifikasi_prestasi<?=$p->id?>").change(function(){
+                                                                                    var ver = $("#verifikasi_prestasi<?=$p->id?>").val();
+                                                                                    var id<?=$p->id?> = $('#id_prestasi<?=$p->id?>').val();
+                                                                                    if(id<?=$p->id?> != ''){
                                                                                     $.ajax({
                                                                                         url:"<?= base_url('Admin/updateStatusPrestasi');?>",
                                                                                         method:"POST",
-                                                                                        data:{id:id<?=$p->id?>, status:status<?=$p->id?>},
+                                                                                        data:{id:id<?=$p->id?>, status:ver},
                                                                                         dataType: 'json',
                                                                                         success:function(data){
-                                                                                            $('#status_prestasi<?=$p->id?>').val(data.status);
-                                                                                            if (data.status==1){
-                                                                                                $("#ver_image_prestasi<?=$p->id?>").attr("src","<?= base_url('assets/ver1.svg');?>");
-                                                                                                $("#ver_button_prestasi<?=$p->id?>").tooltip().attr('data-original-title', "Verified");
-                                                                                            }
-                                                                                            else{
-                                                                                                $("#ver_image_prestasi<?=$p->id?>").attr("src","<?= base_url('assets/ver0.svg');?>");
-                                                                                                $("#ver_button_prestasi<?=$p->id?>").tooltip().attr('data-original-title', "Belum ter-verifikasi");
-                                                                                            }
                                                                                         }
                                                                                     });
                                                                                 }
-                                                                                });
-                                                                                });
-                                                                        </script>
+                                                                                    });
+                                                                                    });
+                                                                            </script>
                                                                         <tbody>
                                                                         
                                                                             <tr>
@@ -209,10 +177,15 @@
                                                                                 <?php endif; ?>
                                                                                 </td>
                                                                                 <td style="text-align:center">
-                                                                                        <button id="ver_button_prestasi<?=$p->id?>" class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="">
+                                                                                        <!-- <button id="ver_button_prestasi<?=$p->id?>" class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="">
                                                                                         <input class="form-control" type="hidden" id="status_prestasi<?=$p->id?>" name="status" value="">
                                                                                         <img id="ver_image_prestasi<?=$p->id?>" src="" alt="ver" width="30" height="30"/>
-                                                                                        </button>
+                                                                                        </button> -->
+                                                                                    <select class="form-control" id="verifikasi_prestasi<?=$p->id?>">
+                                                                                        <option value="0" <?php if($p->status=="0") echo 'selected="selected"'; ?> >Belum di-verifikasi</option>
+                                                                                        <option value="1" <?php if($p->status=="1") echo 'selected="selected"'; ?> >Di-setujui</option>
+                                                                                        <option value="2" <?php if($p->status=="2") echo 'selected="selected"'; ?> >Di-tolak</option>
+                                                                                    </select>
                                                                                     <form style="display:inline-block;" method="post" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus?');" action="<?= base_url('Admin/delete_prestasi');?>">
                                                                                         <input type='hidden' name="id" value="<?= $p->id ?>">
                                                                                         <input class="form-control" type="hidden" name="nim" value="<?=$nim?>">
@@ -236,7 +209,7 @@
                                             <div class="tab-pane fade" id="pills-magang" role="tabpanel" aria-labelledby="pills-magang-tab">
                                                 <div class="card" style="padding-top:10px">
                                                     <div class="card-header">
-                                                        <h5>Form Kampus Merdeka</h5>
+                                                        <h5>Form Kegiatan Akademik</h5>
                                                     </div>
                                                     <div class="card-body" style="text-align: left;">
                                                             <div class="form-row">
@@ -268,56 +241,23 @@
                                                                             $awal = date('d-m-Y', strtotime($m->tgl_awal));
                                                                             $akhir = date('d-m-Y', strtotime($m->tgl_akhir));?>
                                                                             <script type="text/javascript"> 
-                                                                            $(document).ready(function(){
-                                                                                var id<?=$m->id?> = $('#id_magang<?=$m->id?>').val();
-                                                                                if(id<?=$m->id?> != ''){
-                                                                                    $.ajax({
-                                                                                        url:"<?= base_url('Admin/checkStatusMagang');?>",
-                                                                                        method:"POST",
-                                                                                        data:{id:id<?=$m->id?>},
-                                                                                        dataType: 'json',
-                                                                                        success:function(data){
-                                                                                            $('#status_magang<?=$m->id?>').val(data.status);
-                                                                                            if (data.status==1){
-                                                                                                $("#ver_image_magang<?=$m->id?>").attr("src","<?= base_url('assets/ver1.svg');?>");
-                                                                                                $("#ver_button_magang<?=$m->id?>").tooltip().attr('data-original-title', "Verified");
-                                                                                            }
-                                                                                            else{
-                                                                                                $("#ver_image_magang<?=$m->id?>").attr("src","<?= base_url('assets/ver0.svg');?>");
-                                                                                                $("#ver_button_magang<?=$m->id?>").tooltip().attr('data-original-title', "Belum ter-verifikasi");
-                                                                                            }
-                                                                                        }
-                                                                                    });
-                                                                                }
-                                                                                });
-                                                                        </script>    
-                                                                        <script type="text/javascript"> 
-                                                                            $(document).ready(function(){
-                                                                                $('#ver_button_magang<?=$m->id?>').click(function(){
-                                                                                var id<?=$m->id?> = $('#id_magang<?=$m->id?>').val();
-                                                                                var status<?=$m->id?> = $('#status_magang<?=$m->id?>').val();
-                                                                                if(id<?=$m->id?> != ''){
+                                                                                $(document).ready(function(){
+                                                                                    $("#verifikasi_magang<?=$m->id?>").change(function(){
+                                                                                    var ver = $("#verifikasi_magang<?=$m->id?>").val();
+                                                                                    var id<?=$m->id?> = $('#id_magang<?=$m->id?>').val();
+                                                                                    if(id<?=$m->id?> != ''){
                                                                                     $.ajax({
                                                                                         url:"<?= base_url('Admin/updateStatusMagang');?>",
                                                                                         method:"POST",
-                                                                                        data:{id:id<?=$m->id?>, status:status<?=$m->id?>},
+                                                                                        data:{id:id<?=$m->id?>, status:ver},
                                                                                         dataType: 'json',
                                                                                         success:function(data){
-                                                                                            $('#status_magang<?=$m->id?>').val(data.status);
-                                                                                            if (data.status==1){
-                                                                                                $("#ver_image_magang<?=$m->id?>").attr("src","<?= base_url('assets/ver1.svg');?>");
-                                                                                                $("#ver_button_magang<?=$m->id?>").tooltip().attr('data-original-title', "Verified");
-                                                                                            }
-                                                                                            else{
-                                                                                                $("#ver_image_magang<?=$m->id?>").attr("src","<?= base_url('assets/ver0.svg');?>");
-                                                                                                $("#ver_button_magang<?=$m->id?>").tooltip().attr('data-original-title', "Belum ter-verifikasi");
-                                                                                            }
                                                                                         }
                                                                                     });
                                                                                 }
-                                                                                });
-                                                                                });
-                                                                        </script>  
+                                                                                    });
+                                                                                    });
+                                                                            </script>
                                                                         <tbody>
                                                                         
                                                                             <tr>
@@ -357,10 +297,15 @@
                                                                                     <?php } ?> 
                                                                                 <br>
                                                                                 <td style="text-align:center">
-                                                                                        <button id="ver_button_magang<?=$m->id?>" class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="">
+                                                                                        <!-- <button id="ver_button_magang<?=$m->id?>" class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="">
                                                                                         <input class="form-control" type="hidden" id="status_magang<?=$m->id?>" name="status" value="">
                                                                                         <img id="ver_image_magang<?=$m->id?>" src="" alt="ver" width="30" height="30"/>
-                                                                                        </button>
+                                                                                        </button> -->
+                                                                                    <select class="form-control" id="verifikasi_magang<?=$m->id?>">
+                                                                                        <option value="0" <?php if($m->status=="0") echo 'selected="selected"'; ?> >Belum di-verifikasi</option>
+                                                                                        <option value="1" <?php if($m->status=="1") echo 'selected="selected"'; ?> >Di-setujui</option>
+                                                                                        <option value="2" <?php if($m->status=="2") echo 'selected="selected"'; ?> >Di-tolak</option>
+                                                                                    </select>
                                                                                     <form style="display:inline-block;" method="post" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus?');" action="<?= base_url('Admin/delete_magang');?>">
                                                                                         <input type='hidden' name="id" value="<?= $m->id ?>">
                                                                                         <input class="form-control" type="hidden" name="nim" value="<?=$nim?>">
@@ -385,7 +330,7 @@
                                             <div class="tab-pane fade" id="pills-kegiatan" role="tabpanel" aria-labelledby="pills-kegiatan-tab">
                                                 <div class="card" style="padding-top:10px">
                                                     <div class="card-header">
-                                                        <h5>Form Kegiatan Organisasi / Kepanitian Mahasiswa</h5>
+                                                        <h5>Form Kegiatan Organisasi</h5>
                                                     </div>
                                                     <div class="card-body" style="text-align: left;">
                                                             <div class="form-row">
@@ -416,57 +361,24 @@
                                                                         foreach($aktivitas as $a) { 
                                                                             $awal = date('d-m-Y', strtotime($a->tgl_awal));
                                                                             $akhir = date('d-m-Y', strtotime($a->tgl_akhir));?>
-                                                                        <script type="text/javascript"> 
-                                                                            $(document).ready(function(){
-                                                                                var id<?=$a->id?> = $('#id_aktivitas<?=$a->id?>').val();
-                                                                                if(id<?=$a->id?> != ''){
-                                                                                    $.ajax({
-                                                                                        url:"<?= base_url('Admin/checkStatusAktivitas');?>",
-                                                                                        method:"POST",
-                                                                                        data:{id:id<?=$a->id?>},
-                                                                                        dataType: 'json',
-                                                                                        success:function(data){
-                                                                                            $('#status_aktivitas<?=$a->id?>').val(data.status);
-                                                                                            if (data.status==1){
-                                                                                                $("#ver_image_aktivitas<?=$a->id?>").attr("src","<?= base_url('assets/ver1.svg');?>");
-                                                                                                $("#ver_button_aktivitas<?=$a->id?>").tooltip().attr('data-original-title', "Verified");
-                                                                                            }
-                                                                                            else{
-                                                                                                $("#ver_image_aktivitas<?=$a->id?>").attr("src","<?= base_url('assets/ver0.svg');?>");
-                                                                                                $("#ver_button_aktivitas<?=$a->id?>").tooltip().attr('data-original-title', "Belum ter-verifikasi");
-                                                                                            }
-                                                                                        }
-                                                                                    });
-                                                                                }
-                                                                                });
-                                                                        </script>    
-                                                                        <script type="text/javascript"> 
-                                                                            $(document).ready(function(){
-                                                                                $('#ver_button_aktivitas<?=$a->id?>').click(function(){
-                                                                                var id<?=$a->id?> = $('#id_aktivitas<?=$a->id?>').val();
-                                                                                var status<?=$a->id?> = $('#status_aktivitas<?=$a->id?>').val();
-                                                                                if(id<?=$a->id?> != ''){
+                                                                            <script type="text/javascript"> 
+                                                                                $(document).ready(function(){
+                                                                                    $("#verifikasi_aktivitas<?=$a->id?>").change(function(){
+                                                                                    var ver = $("#verifikasi_aktivitas<?=$a->id?>").val();
+                                                                                    var id<?=$a->id?> = $('#id_aktivitas<?=$a->id?>').val();
+                                                                                    if(id<?=$a->id?> != ''){
                                                                                     $.ajax({
                                                                                         url:"<?= base_url('Admin/updateStatusAktivitas');?>",
                                                                                         method:"POST",
-                                                                                        data:{id:id<?=$a->id?>, status:status<?=$a->id?>},
+                                                                                        data:{id:id<?=$a->id?>, status:ver},
                                                                                         dataType: 'json',
                                                                                         success:function(data){
-                                                                                            $('#status_aktivitas<?=$a->id?>').val(data.status);
-                                                                                            if (data.status==1){
-                                                                                                $("#ver_image_aktivitas<?=$a->id?>").attr("src","<?= base_url('assets/ver1.svg');?>");
-                                                                                                $("#ver_button_aktivitas<?=$a->id?>").tooltip().attr('data-original-title', "Verified");
-                                                                                            }
-                                                                                            else{
-                                                                                                $("#ver_image_aktivitas<?=$a->id?>").attr("src","<?= base_url('assets/ver0.svg');?>");
-                                                                                                $("#ver_button_aktivitas<?=$a->id?>").tooltip().attr('data-original-title', "Belum ter-verifikasi");
-                                                                                            }
                                                                                         }
                                                                                     });
                                                                                 }
-                                                                                });
-                                                                                });
-                                                                        </script>    
+                                                                                    });
+                                                                                    });
+                                                                            </script> 
                                                                         <tbody>
                                                                         
                                                                             <tr>
@@ -482,7 +394,7 @@
                                                                                     <b>Waktu Pelakasanaan:</b><br>
                                                                                     <?= $awal ?> sampai <?= $akhir ?><br><br>
                                                                                 </td>
-                                                                                <td>Sertifikat<br>
+                                                                                <td>Sertifikat/SK<br>
                                                                                 <?php if(empty($a->sertifikat)): ?> -
                                                                                 <?php else : ?> <button method="post" onclick=" window.open('<?= base_url('assets/sertifikat');?>/<?=$a->sertifikat?>', '_blank'); return false;" class="btn btn-primary-outline"><img src="<?= base_url('assets/attach.png');?>" alt="attach" width="30" height="30"/></button>
                                                                                 <?php endif; ?>
@@ -493,10 +405,15 @@
                                                                                 <?php endif; ?>
                                                                                 </td>
                                                                                 <td style="text-align:center">
-                                                                                        <button id="ver_button_aktivitas<?=$a->id?>" class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="">
+                                                                                        <!-- <button id="ver_button_aktivitas<?=$a->id?>" class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="">
                                                                                         <input class="form-control" type="hidden" id="status_aktivitas<?=$a->id?>" name="status" value="">
                                                                                         <img id="ver_image_aktivitas<?=$a->id?>" src="" alt="ver" width="30" height="30"/>
-                                                                                        </button>
+                                                                                        </button> -->
+                                                                                    <select class="form-control" id="verifikasi_aktivitas<?=$a->id?>">
+                                                                                        <option value="0" <?php if($a->status=="0") echo 'selected="selected"'; ?> >Belum di-verifikasi</option>
+                                                                                        <option value="1" <?php if($a->status=="1") echo 'selected="selected"'; ?> >Di-setujui</option>
+                                                                                        <option value="2" <?php if($a->status=="2") echo 'selected="selected"'; ?> >Di-tolak</option>
+                                                                                    </select>
                                                                                     <form style="display:inline-block;" method="post" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus?');" action="<?= base_url('Admin/delete_aktivitas');?>">
                                                                                         <input type='hidden' name="id" value="<?= $a->id ?>">
                                                                                         <input class="form-control" type="hidden" name="nim" value="<?=$nim?>">
@@ -549,57 +466,24 @@
                                                                         $no = 1;
                                                                         foreach($kompetensi as $k) { 
                                                                             $tgl = date('d-m-Y', strtotime($k->tgl));?>
-                                                                        <script type="text/javascript"> 
-                                                                            $(document).ready(function(){
-                                                                                var id<?=$k->id?> = $('#id_kompetensi<?=$k->id?>').val();
-                                                                                if(id<?=$k->id?> != ''){
-                                                                                    $.ajax({
-                                                                                        url:"<?= base_url('Admin/checkStatusKompetensi');?>",
-                                                                                        method:"POST",
-                                                                                        data:{id:id<?=$k->id?>},
-                                                                                        dataType: 'json',
-                                                                                        success:function(data){
-                                                                                            $('#status_kompetensi<?=$k->id?>').val(data.status);
-                                                                                            if (data.status==1){
-                                                                                                $("#ver_image_kompetensi<?=$k->id?>").attr("src","<?= base_url('assets/ver1.svg');?>");
-                                                                                                $("#ver_button_kompetensi<?=$k->id?>").tooltip().attr('data-original-title', "Verified");
-                                                                                            }
-                                                                                            else{
-                                                                                                $("#ver_image_kompetensi<?=$k->id?>").attr("src","<?= base_url('assets/ver0.svg');?>");
-                                                                                                $("#ver_button_kompetensi<?=$k->id?>").tooltip().attr('data-original-title', "Belum ter-verifikasi");
-                                                                                            }
-                                                                                        }
-                                                                                    });
-                                                                                }
-                                                                                });
-                                                                        </script>    
-                                                                        <script type="text/javascript"> 
-                                                                            $(document).ready(function(){
-                                                                                $('#ver_button_kompetensi<?=$k->id?>').click(function(){
-                                                                                var id<?=$k->id?> = $('#id_kompetensi<?=$k->id?>').val();
-                                                                                var status<?=$k->id?> = $('#status_kompetensi<?=$k->id?>').val();
-                                                                                if(id<?=$k->id?> != ''){
+                                                                            <script type="text/javascript"> 
+                                                                                $(document).ready(function(){
+                                                                                    $("#verifikasi_kompetensi<?=$k->id?>").change(function(){
+                                                                                    var ver = $("#verifikasi_kompetensi<?=$k->id?>").val();
+                                                                                    var id<?=$k->id?> = $('#id_kompetensi<?=$k->id?>').val();
+                                                                                    if(id<?=$k->id?> != ''){
                                                                                     $.ajax({
                                                                                         url:"<?= base_url('Admin/updateStatusKompetensi');?>",
                                                                                         method:"POST",
-                                                                                        data:{id:id<?=$k->id?>, status:status<?=$k->id?>},
+                                                                                        data:{id:id<?=$k->id?>, status:ver},
                                                                                         dataType: 'json',
                                                                                         success:function(data){
-                                                                                            $('#status_kompetensi<?=$k->id?>').val(data.status);
-                                                                                            if (data.status==1){
-                                                                                                $("#ver_image_kompetensi<?=$k->id?>").attr("src","<?= base_url('assets/ver1.svg');?>");
-                                                                                                $("#ver_button_kompetensi<?=$k->id?>").tooltip().attr('data-original-title', "Verified");
-                                                                                            }
-                                                                                            else{
-                                                                                                $("#ver_image_kompetensi<?=$k->id?>").attr("src","<?= base_url('assets/ver0.svg');?>");
-                                                                                                $("#ver_button_kompetensi<?=$k->id?>").tooltip().attr('data-original-title', "Belum ter-verifikasi");
-                                                                                            }
                                                                                         }
                                                                                     });
                                                                                 }
-                                                                                });
-                                                                                });
-                                                                        </script>
+                                                                                    });
+                                                                                    });
+                                                                            </script>
                                                                         <tbody>
                                                                         
                                                                             <tr>
@@ -621,10 +505,15 @@
                                                                                 <?php endif; ?>
                                                                                 </td>
                                                                                 <td style="text-align:center">
-                                                                                        <button id="ver_button_kompetensi<?=$k->id?>" class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="">
+                                                                                        <!-- <button id="ver_button_kompetensi<?=$k->id?>" class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="">
                                                                                         <input class="form-control" type="hidden" id="status_kompetensi<?=$k->id?>" name="status" value="">
                                                                                         <img id="ver_image_kompetensi<?=$k->id?>" src="" alt="ver" width="30" height="30"/>
-                                                                                        </button>
+                                                                                        </button> -->
+                                                                                    <select class="form-control" id="verifikasi_kompetensi<?=$k->id?>">
+                                                                                        <option value="0" <?php if($k->status=="0") echo 'selected="selected"'; ?> >Belum di-verifikasi</option>
+                                                                                        <option value="1" <?php if($k->status=="1") echo 'selected="selected"'; ?> >Di-setujui</option>
+                                                                                        <option value="2" <?php if($k->status=="2") echo 'selected="selected"'; ?> >Di-tolak</option>
+                                                                                    </select>
                                                                                     <form style="display:inline-block;" method="post" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus?');" action="<?= base_url('Admin/delete_kompetensi');?>">
                                                                                         <input type='hidden' name="id" value="<?= $k->id ?>">
                                                                                         <input class="form-control" type="hidden" name="nim" value="<?=$nim?>">
@@ -669,6 +558,52 @@
                                                             otherInput.removeAttribute("required");
                                                             penyelenggara.setAttribute("name", "penyelenggara");
                                                             penyelenggara.setAttribute("required","");
+                                                        }
+                                                        }
+                                                    </script>
+                                                    <script>
+                                                        function checkPrestasi(select) {
+                                                        var prestasi =  document.getElementById('prestasi');
+                                                        var otherInput = document.getElementById('otherPrestasi');
+                                                        if (select.options[select.selectedIndex].value == "Other") {
+                                                            otherInput.style.display = 'block';
+                                                            otherInput.setAttribute("name", "prestasi");
+                                                            otherInput.setAttribute("required","");
+                                                            prestasi.setAttribute("name", "");
+                                                            prestasi.removeAttribute("required");
+                                                        }
+                                                        else {
+                                                            otherInput.style.display = 'none';
+                                                            otherInput.setAttribute("name", "");
+                                                            otherInput.removeAttribute("required");
+                                                            prestasi.setAttribute("name", "prestasi");
+                                                            prestasi.setAttribute("required","");
+                                                        }
+                                                        }
+                                                    </script>
+                                                    <script>
+                                                        function checkDosbingPrestasi(select) {
+                                                        var dosbing =  document.getElementById('dosbing');
+                                                        var dosen_lain = document.getElementById('dosen_lain');
+                                                        var nip_dosen = document.getElementById('nip_dosbing');
+                                                        var nama_dosen = document.getElementById('nama_dosbing');
+                                                        if (select.options[select.selectedIndex].value == "lain") {
+                                                            dosen_lain.style.display = 'block';
+                                                            nip_dosen.setAttribute("name", "dosbing");
+                                                            nip_dosen.setAttribute("required","");
+                                                            nama_dosen.setAttribute("name", "nama_dosbing");
+                                                            nama_dosen.setAttribute("required","");
+                                                            dosbing.setAttribute("name", "");
+                                                            dosbing.removeAttribute("required");
+                                                        }
+                                                        else {
+                                                            dosen_lain.style.display = 'none';
+                                                            nip_dosen.setAttribute("name", "");
+                                                            nip_dosen.removeAttribute("required");
+                                                            nama_dosen.setAttribute("name", "");
+                                                            nama_dosen.removeAttribute("required");
+                                                            dosbing.setAttribute("name", "dosbing");
+                                                            dosbing.setAttribute("required","");
                                                         }
                                                         }
                                                     </script>
@@ -727,12 +662,17 @@
                                                                         </select>
                                                                         <input class="form-control" name='' id='otherPrestasi' placeholder="Isi di sini" style="display: none"/><br>
                                                                         <label>Dosen Pembimbing</label>
-                                                                        <select class="chosen-select-width" style="font-size: 1rem" name="dosbing" placeholder="dosbing">
+                                                                        <select class="chosen-select-width" style="font-size: 1rem" onchange="checkDosbingPrestasi(this)" id="dosbing" name="dosbing" placeholder="dosbing">
                                                                             <option value="">Please Select</option>
+                                                                            <option value="lain"><b>Dosen Lainnya (Selain Dosen Elektro)</b></option>
                                                                             <?php foreach($dosen as $d){ ?>
                                                                             <option value="<?= $d->nip ?>"><?= $d->nama ?></option>
                                                                             <?php } ?>
-                                                                        </select><hr>
+                                                                        </select><br>
+                                                                            <div class="form-control" id="dosen_lain" style="display: none">
+                                                                                <input class="form-control" name="" id="nip_dosbing" placeholder="NIP Dosen">
+                                                                                <input class="form-control" name="" id="nama_dosbing" placeholder="Nama Dosen">
+                                                                            </div><hr>
                                                                         <label>Surat Tugas Dekan/Rektor</label><label style="color:red; font-size:12px;"> (*Wajib diisi)</label><br>
                                                                         <input type="file" accept="application/pdf" name="surat" required=""><br>
                                                                         <label style="color:red; font-size:12px;">.pdf maks 1mb</label><br><br>
@@ -751,6 +691,34 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            $('#nip_dosbing').on("change", function(){
+            var nip = $('#nip_dosbing').val();
+            if(nip != ''){
+                $.ajax({
+                    url:"<?php echo base_url('mhs/checkDosen');?>",
+                    method:"get",
+                    data:{nip:nip},
+                    dataType: 'json',
+                    success:function(data){
+                        console.log(data.cek);
+                        if (data.cek=="exist"){
+                            var nama = data.nama;
+                            $('#nama_dosbing').attr('value', nama);
+                            // $("#nama_dosbing").attr("disabled", true);
+                           
+                        }
+                        else{
+                            // $("#nama_dosbing").attr("disabled", false);
+                        }
+                    }
+                });
+            }
+            });
+            });
+    </script>
 
                                                     <!-- modal tambah magang -->
                                                     <script>
@@ -811,11 +779,37 @@
                                                         }
                                                         }
                                                     </script>
+                                                    <script>
+                                                        function checkDosbingMagang(select) {
+                                                        var dosbing =  document.getElementById('dosbing');
+                                                        var dosen_lain = document.getElementById('dosen_lain_magang');
+                                                        var nip_dosen = document.getElementById('nip_dosbing_magang');
+                                                        var nama_dosen = document.getElementById('nama_dosbing_magang');
+                                                        if (select.options[select.selectedIndex].value == "lain") {
+                                                            dosen_lain.style.display = 'block';
+                                                            nip_dosen.setAttribute("name", "dosbing");
+                                                            nip_dosen.setAttribute("required","");
+                                                            nama_dosen.setAttribute("name", "nama_dosbing");
+                                                            nama_dosen.setAttribute("required","");
+                                                            dosbing.setAttribute("name", "");
+                                                            dosbing.removeAttribute("required");
+                                                        }
+                                                        else {
+                                                            dosen_lain.style.display = 'none';
+                                                            nip_dosen.setAttribute("name", "");
+                                                            nip_dosen.removeAttribute("required");
+                                                            nama_dosen.setAttribute("name", "");
+                                                            nama_dosen.removeAttribute("required");
+                                                            dosbing.setAttribute("name", "dosbing");
+                                                            dosbing.setAttribute("required","");
+                                                        }
+                                                        }
+                                                    </script>
                                                     <div class="modal fade tambah-magang" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title h4" id="myLargeModalLabel">Tambah Kampus Merdeka</h5>
+                                                                    <h5 class="modal-title h4" id="myLargeModalLabel">Tambah Kegiatan Akademik</h5>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                                 </div>
                                                                 <form role="form" autocomplete="off" method="post" action="<?= base_url('Admin/insert_magang');?>" enctype="multipart/form-data">
@@ -846,7 +840,7 @@
                                                                             <input class="form-control" name='' id='otherMagang' placeholder="Isi di sini" style="display: none"/><br>
                                                                         </div>
                                                                         <div id="d_merdeka">
-                                                                        <label>Kampus Merdeka</label><label style="color:red; font-size:12px;"> (*Wajib diisi)</label>
+                                                                        <label>Apakah termasuk kampus merdeka dikti</label><label style="color:red; font-size:12px;"> (*Wajib diisi)</label>
                                                                             <select class="form-control" onchange="checkLink(this)" name="merdeka" id="merdeka" required="">
                                                                                 <option value="Tidak">Tidak</option>
                                                                                 <option value="Ya">Ya</option>
@@ -876,13 +870,18 @@
                                                                         </div>
                                                                         <div id="d_dosbing">
                                                                             <label>Dosen Pembimbing</label><label style="color:red; font-size:12px;"> (*Wajib diisi)</label>
-                                                                            <select class="chosen-select-width" id="dosbing" style="font-size: 1rem" name="dosbing" placeholder="dosbing" required="">
+                                                                            <select class="chosen-select-width" onchange="checkDosbingMagang(this)" id="dosbing_magang" style="font-size: 1rem" name="dosbing" placeholder="dosbing" required="">
                                                                                 <option value="">Please Select</option>
+                                                                                <option value="lain"><b>Dosen Lainnya (Selain Dosen Elektro)</b></option>
                                                                                 <?php foreach($dosen as $d){ ?>
                                                                                 <option value="<?= $d->nip ?>"><?= $d->nama ?></option>
                                                                                 <?php } ?>
-                                                                            </select><hr>
-                                                                        </div>
+                                                                            </select><br>
+                                                                            <div class="form-control" id="dosen_lain_magang" style="display: none">
+                                                                                <input class="form-control" name="" id="nip_dosbing_magang" placeholder="NIP Dosen">
+                                                                                <input class="form-control" name="" id="nama_dosbing_magang" placeholder="Nama Dosen">
+                                                                            </div>
+                                                                        </div><hr>
                                                                         <label>Status</label><label style="color:red; font-size:12px;"> (*Wajib diisi)</label>
                                                                         <select class="form-control" onchange="checkFile(this)" id="status" name="status" required="">
                                                                             <option value="Pendaftaran">Pendaftaran</option>
@@ -949,6 +948,34 @@
             });
     </script>  
 
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            $('#nip_dosbing_magang').on("change", function(){
+            var nip = $('#nip_dosbing_magang').val();
+            if(nip != ''){
+                $.ajax({
+                    url:"<?php echo base_url('admin/checkDosen');?>",
+                    method:"get",
+                    data:{nip:nip},
+                    dataType: 'json',
+                    success:function(data){
+                        console.log(data.cek);
+                        if (data.cek=="exist"){
+                            var nama = data.nama;
+                            $('#nama_dosbing_magang').attr('value', nama);
+                            // $("#nama_dosbing").attr("disabled", true);
+                           
+                        }
+                        else{
+                            // $("#nama_dosbing").attr("disabled", false);
+                        }
+                    }
+                });
+            }
+            });
+            });
+    </script>
+
                                                     <!-- modal tambah kegiatan mahasiswa -->
                                                     <script>
                                                         function checkKlasifikasi(select) {
@@ -993,11 +1020,31 @@
                                                         }
                                                         }
                                                     </script>
+                                                    <script>
+                                                        function checkJabatan(select) {
+                                                        jabatan = document.getElementById('v_jabatan');
+                                                        otherJabatan = document.getElementById('otherJabatan');
+                                                        if (select.options[select.selectedIndex].value == "Other") {
+                                                            otherJabatan.style.display = 'block';
+                                                            otherJabatan.setAttribute("name", "jabatan");
+                                                            otherJabatan.setAttribute("required","");
+                                                            jabatan.setAttribute("name", "");
+                                                            jabatan.removeAttribute("required");
+                                                        }
+                                                        else {
+                                                            otherJabatan.style.display = 'none';
+                                                            otherJabatan.setAttribute("name", "");
+                                                            otherJabatan.removeAttribute("required");
+                                                            jabatan.setAttribute("name", "jabatan");
+                                                            jabatan.setAttribute("required","");
+                                                        }
+                                                        }
+                                                    </script>
                                                     <div class="modal fade tambah-kegiatan" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title h4" id="myLargeModalLabel">Tambah Kegiatan Mahasiswa</h5>
+                                                                    <h5 class="modal-title h4" id="myLargeModalLabel">Tambah Kegiatan Organisasi</h5>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                                 </div>
                                                                 <form role="form" method="post" action="<?= base_url('Admin/insert_aktivitas');?>" enctype="multipart/form-data">
@@ -1024,20 +1071,22 @@
                                                                         <label id="l_nama">Nama Organisasi</label><label style="color:red; font-size:12px;"> (*Wajib diisi)</label>
                                                                         <textarea class="form-control" id="pnama" placeholder="Nama Organisasi" row="3" name="nama"  required=""></textarea><br>
                                                                         <label id="jabatan">Jabatan</label><label style="color:red; font-size:12px;"> (*Wajib diisi)</label>
-                                                                        <select class="form-control" name="jabatan" required="">
+                                                                        <select class="form-control" name="jabatan" onchange="checkJabatan(this)" required="">
                                                                             <option value="">Please Select</option>
                                                                             <option value="Ketua">Ketua</option>
                                                                             <option value="Wakil Ketua">Wakil Ketua</option>
                                                                             <option value="Sekretaris">Sekretaris</option>
                                                                             <option value="Anggota">Anggota</option>
-                                                                        </select><br>
+                                                                            <option value="Other">Yang lain...</option>
+                                                                        </select>
+                                                                        <input class="form-control" name='' id='otherJabatan' placeholder="Isi di sini" style="display: none"/><br>
                                                                         <label id="masa">Masa Jabatan</label><label style="color:red; font-size:12px;"> (*Wajib diisi)</label>
                                                                         <div class="row" style="text-align: center; padding-left:1rem; padding-right:1rem">
                                                                             <input class="form-control col-5" type="date" name="tgl_awal" required="">
                                                                             <input class="form-control col-2" type="text" style="text-align: center;" value="-" disabled>
                                                                             <input class="form-control col-5" type="date" name="tgl_akhir" required="">
                                                                         </div><br>
-                                                                        <label>File Sertifikat</label><label style="color:red; font-size:12px;"> (*Wajib diisi)</label><br>
+                                                                        <label>File Sertifikat/SK</label><label style="color:red; font-size:12px;"> (*Wajib diisi)</label><br>
                                                                         <input type="file" accept="application/pdf" name="sertifikat" required=""><br>
                                                                         <label style="color:red; font-size:12px;">.pdf maks 1mb</label><br><br>
                                                                         <label>Foto Dokumentasi</label><br>

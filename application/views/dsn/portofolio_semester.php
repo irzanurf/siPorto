@@ -63,7 +63,7 @@
                                             <div class="tab-pane fade show active" id="pills-akademik" role="tabpanel" aria-labelledby="pills-akademik-tab">
                                                 <div class="card" style="padding-top:10px">
                                                     <div class="card-header">
-                                                        <h5>Form Akademik Kuliah</h5>
+                                                        <h5>Form Hasil Studi</h5>
                                                     </div>
                                                     <div class="card-body">
                                                         <form class="needs-validation">
@@ -184,12 +184,17 @@
                                                                                 <td style="text-align:center">
                                                                                 <?php if($p->status==1){ ?>
                                                                                     <button class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="Verified">
-                                                                                        <img src="<?= base_url('assets/ver1.svg');?>" alt="ver" width="30" height="30"/>
+                                                                                        <img src="<?= base_url('assets/ver1.png');?>" alt="ver" width="30" height="30"/>
                                                                                         </button>
                                                                                 <?php }
+                                                                                elseif($p->status==2) { ?>
+                                                                                    <button class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="Di-tolak">
+                                                                                        <img src="<?= base_url('assets/ver2.png');?>" alt="ver" width="30" height="30"/>
+                                                                                        </button>
+                                                                                <?php } 
                                                                                 else { ?>
                                                                                     <button class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="Belum di-verifikasi">
-                                                                                        <img src="<?= base_url('assets/ver0.svg');?>" alt="ver" width="30" height="30"/>
+                                                                                        <img src="<?= base_url('assets/ver0.png');?>" alt="ver" width="30" height="30"/>
                                                                                         </button>
                                                                                 <?php } ?>
                                                                                 </td>
@@ -207,7 +212,7 @@
                                             <div class="tab-pane fade" id="pills-magang" role="tabpanel" aria-labelledby="pills-magang-tab">
                                                 <div class="card" style="padding-top:10px">
                                                     <div class="card-header">
-                                                        <h5>Form Magang/KP/Kampus Merdeka</h5>
+                                                        <h5>Form Kegiatan Akademik</h5>
                                                     </div>
                                                     <div class="card-body" style="text-align: left;">
                                                             <div class="form-row">
@@ -281,12 +286,17 @@
 
                                                                                 <?php if($m->status==1){ ?>
                                                                                     <button class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="Verified">
-                                                                                        <img src="<?= base_url('assets/ver1.svg');?>" alt="ver" width="30" height="30"/>
+                                                                                        <img src="<?= base_url('assets/ver1.png');?>" alt="ver" width="30" height="30"/>
                                                                                         </button>
                                                                                 <?php }
+                                                                                elseif($m->status==2) { ?>
+                                                                                    <button class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="Di-tolak">
+                                                                                        <img src="<?= base_url('assets/ver2.png');?>" alt="ver" width="30" height="30"/>
+                                                                                        </button>
+                                                                                <?php } 
                                                                                 else { ?>
                                                                                     <button class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="Belum di-verifikasi">
-                                                                                        <img src="<?= base_url('assets/ver0.svg');?>" alt="ver" width="30" height="30"/>
+                                                                                        <img src="<?= base_url('assets/ver0.png');?>" alt="ver" width="30" height="30"/>
                                                                                         </button>
                                                                                 <?php } ?>
 
@@ -305,7 +315,7 @@
                                             <div class="tab-pane fade" id="pills-kegiatan" role="tabpanel" aria-labelledby="pills-kegiatan-tab">
                                                 <div class="card" style="padding-top:10px">
                                                     <div class="card-header">
-                                                        <h5>Form Kegiatan Organisasi / Kepanitian Mahasiswa</h5>
+                                                        <h5>Form Kegiatan Organisasi</h5>
                                                     </div>
                                                     <div class="card-body" style="text-align: left;">
                                                             <div class="form-row">
@@ -348,7 +358,7 @@
                                                                                     <b>Waktu Pelakasanaan:</b><br>
                                                                                     <?= $awal ?> sampai <?= $akhir ?><br><br>
                                                                                 </td>
-                                                                                <td>Sertifikat<br>
+                                                                                <td>Sertifikat/SK<br>
                                                                                 <?php if(empty($a->sertifikat)): ?> -
                                                                                 <?php else : ?> <button method="post" onclick=" window.open('<?= base_url('assets/sertifikat');?>/<?=$a->sertifikat?>', '_blank'); return false;" class="btn btn-primary-outline"><img src="<?= base_url('assets/attach.png');?>" alt="attach" width="30" height="30"/></button>
                                                                                 <?php endif; ?>
@@ -361,12 +371,17 @@
                                                                                 <td style="text-align:center">
                                                                                 <?php if($a->status==1){ ?>
                                                                                     <button class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="Verified">
-                                                                                        <img src="<?= base_url('assets/ver1.svg');?>" alt="ver" width="30" height="30"/>
+                                                                                        <img src="<?= base_url('assets/ver1.png');?>" alt="ver" width="30" height="30"/>
                                                                                         </button>
                                                                                 <?php }
+                                                                                elseif($a->status==2) { ?>
+                                                                                    <button class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="Di-tolak">
+                                                                                        <img src="<?= base_url('assets/ver2.png');?>" alt="ver" width="30" height="30"/>
+                                                                                        </button>
+                                                                                <?php } 
                                                                                 else { ?>
                                                                                     <button class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="Belum di-verifikasi">
-                                                                                        <img src="<?= base_url('assets/ver0.svg');?>" alt="ver" width="30" height="30"/>
+                                                                                        <img src="<?= base_url('assets/ver0.png');?>" alt="ver" width="30" height="30"/>
                                                                                         </button>
                                                                                 <?php } ?>
                                                                                 </td>
@@ -435,12 +450,17 @@
                                                                                 <td style="text-align:center">
                                                                                 <?php if($k->status==1){ ?>
                                                                                     <button class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="Verified">
-                                                                                        <img src="<?= base_url('assets/ver1.svg');?>" alt="ver" width="30" height="30"/>
+                                                                                        <img src="<?= base_url('assets/ver1.png');?>" alt="ver" width="30" height="30"/>
+                                                                                        </button>
+                                                                                <?php }
+                                                                                elseif($k->status==2) { ?>
+                                                                                    <button class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="Di-tolak">
+                                                                                        <img src="<?= base_url('assets/ver2.png');?>" alt="ver" width="30" height="30"/>
                                                                                         </button>
                                                                                 <?php }
                                                                                 else { ?>
                                                                                     <button class="btn btn-primary-outline" data-toggle="tooltip" data-placement="top" title="Belum di-verifikasi">
-                                                                                        <img src="<?= base_url('assets/ver0.svg');?>" alt="ver" width="30" height="30"/>
+                                                                                        <img src="<?= base_url('assets/ver0.png');?>" alt="ver" width="30" height="30"/>
                                                                                         </button>
                                                                                 <?php } ?> 
                                                                                 </td>

@@ -11,6 +11,15 @@ class M_Dosen extends CI_Model
         return $query;
     }
 
+    public function get_dosen_wali()
+    {
+        $query = $this->db->select('*')
+        ->from('tb_dosen')
+        ->where('status',0)
+        ->get();
+        return $query;
+    }
+
     public function getwhere_dosen(array $data)
     {
         $query = $this->db->select('*')
@@ -48,6 +57,24 @@ class M_Dosen extends CI_Model
         }
         else{
 
+        }   
+    }
+
+    public function update_dosen($data,$dosbing)
+    {
+        $query = $this->db->select('*')
+        ->from('tb_dosen')
+        ->where('nip',"$dosbing")
+        ->get();
+        $result = $query->result_array();
+        $count = count($result);
+    
+        if (empty($count)){
+            $this->db->insert('tb_dosen',$data);
+        }
+        else{
+            $this->db->where('nip', $dosbing);
+            $this->db->update('tb_dosen',$data);
         }   
     }
 

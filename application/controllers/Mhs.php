@@ -242,6 +242,19 @@ class Mhs extends CI_Controller {
         $tgl_akhir = $this->input->post('tgl_akhir',true);
         $tingkat = $this->input->post('tingkat',true);
         $prestasi = $this->input->post('prestasi',true);
+
+        $nama_dosbing = $this->input->post('nama_dosbing',true);
+        if (empty($nama_dosbing)){
+
+        }
+        else {
+            $data = [
+                "nip"=>$dosbing,
+                "nama"=>$nama_dosbing,
+                "status"=>1
+            ];
+            $this->M_Dosen->update_dosen($data,$dosbing);
+        }
         
         $data = [
             "id_portofolio"=>$id_portofolio,
@@ -357,6 +370,19 @@ class Mhs extends CI_Controller {
         $posisi = $this->input->post('posisi',true);
         $topik = $this->input->post('topik',true);
         $dosbing = $this->input->post('dosbing',true);
+
+        $nama_dosbing = $this->input->post('nama_dosbing',true);
+        if (empty($nama_dosbing)){
+
+        }
+        else {
+            $data = [
+                "nip"=>$dosbing,
+                "nama"=>$nama_dosbing,
+                "status"=>1
+            ];
+            $this->M_Dosen->update_dosen($data,$dosbing);
+        }
 
         if (empty($id)){
             $data = [
@@ -562,6 +588,20 @@ class Mhs extends CI_Controller {
         $semester = $this->input->post('semester');
         $this->M_Kompetensi->del_kompetensi(array('id'=>$id));
         redirect (base_url("Mhs/form_semester"."/"."$semester")); 
+    }
+
+    public function checkDosen()
+    {
+        $nip = $this->input->get('nip');
+        $if_exists = $this->M_Dosen->getwhere_dosen(array('nip'=>"$nip"))->row()->nama;
+        if (!empty($if_exists)) {
+            $data['cek'] = "exist";
+            $data['nama'] = $if_exists;
+            echo json_encode($data);
+        } else {
+            $data['cek'] = "empty";
+            echo json_encode($data);
+        }
     }
 
 }

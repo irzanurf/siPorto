@@ -139,19 +139,10 @@ class Admin extends CI_Controller {
     {
         $id = $this->input->post('id');
         $status = $this->input->post('status');
-        if($status==0){
             $data=[
-                "status"=>1
+                "status"=>$status
             ];
-        }
-        else{
-            $data=[
-                "status"=>0
-            ];
-        }
         $this->M_Prestasi->update_prestasi($data, $id);
-        $data['status'] = $this->M_Prestasi->getwhere_prestasi(array('id'=>"$id"))->row()->status;
-        echo json_encode($data);
     }
 
     public function checkStatusMagang()
@@ -165,19 +156,10 @@ class Admin extends CI_Controller {
     {
         $id = $this->input->post('id');
         $status = $this->input->post('status');
-        if($status==0){
             $data=[
-                "status"=>1
+                "status"=>$status
             ];
-        }
-        else{
-            $data=[
-                "status"=>0
-            ];
-        }
         $this->M_Magang->update_magang($data, $id);
-        $data['status'] = $this->M_Magang->getwhere_magang(array('id'=>"$id"))->row()->status;
-        echo json_encode($data);
     }
 
     public function checkStatusAktivitas()
@@ -191,19 +173,10 @@ class Admin extends CI_Controller {
     {
         $id = $this->input->post('id');
         $status = $this->input->post('status');
-        if($status==0){
             $data=[
-                "status"=>1
+                "status"=>$status
             ];
-        }
-        else{
-            $data=[
-                "status"=>0
-            ];
-        }
         $this->M_Aktivitas->update_aktivitas($data, $id);
-        $data['status'] = $this->M_Aktivitas->getwhere_aktivitas(array('id'=>"$id"))->row()->status;
-        echo json_encode($data);
     }
 
     public function checkStatusKompetensi()
@@ -217,19 +190,10 @@ class Admin extends CI_Controller {
     {
         $id = $this->input->post('id');
         $status = $this->input->post('status');
-        if($status==0){
             $data=[
-                "status"=>1
+                "status"=>$status
             ];
-        }
-        else{
-            $data=[
-                "status"=>0
-            ];
-        }
         $this->M_Kompetensi->update_kompetensi($data, $id);
-        $data['status'] = $this->M_Kompetensi->getwhere_kompetensi(array('id'=>"$id"))->row()->status;
-        echo json_encode($data);
     }
 
     public function form_semester()
@@ -352,6 +316,19 @@ class Admin extends CI_Controller {
         $tgl_akhir = $this->input->post('tgl_akhir',true);
         $tingkat = $this->input->post('tingkat',true);
         $prestasi = $this->input->post('prestasi',true);
+
+        $nama_dosbing = $this->input->post('nama_dosbing',true);
+        if (empty($nama_dosbing)){
+
+        }
+        else {
+            $data = [
+                "nip"=>$dosbing,
+                "nama"=>$nama_dosbing,
+                "status"=>1
+            ];
+            $this->M_Dosen->update_dosen($data,$dosbing);
+        }
         
         $data = [
             "id_portofolio"=>$id_portofolio,
@@ -469,7 +446,20 @@ class Admin extends CI_Controller {
         $posisi = $this->input->post('posisi',true);
         $topik = $this->input->post('topik',true);
         $dosbing = $this->input->post('dosbing',true);
-        
+
+        $nama_dosbing = $this->input->post('nama_dosbing',true);
+        if (empty($nama_dosbing)){
+
+        }
+        else {
+            $data = [
+                "nip"=>$dosbing,
+                "nama"=>$nama_dosbing,
+                "status"=>1
+            ];
+            $this->M_Dosen->update_dosen($data,$dosbing);
+        }
+
         if (empty($id)){
             $data = [
                 "id_portofolio"=>$id_portofolio,
@@ -766,7 +756,7 @@ class Admin extends CI_Controller {
     public function akunmhs()
     {
         $username = $this->session->userdata('username');
-        $data['dosen'] = $this->M_Dosen->get_dosen()->result();
+        $data['dosen'] = $this->M_Dosen->get_dosen_wali()->result();
         $data['mahasiswa'] = $this->M_Mahasiswa->get_mahasiswa()->result();
         $this->load->view('layout/header_admin');
         $this->load->view('admin/akun_mhs', $data);
@@ -835,7 +825,7 @@ class Admin extends CI_Controller {
     public function akundsn()
     {
         $username = $this->session->userdata('username');
-        $data['dosen'] = $this->M_Dosen->get_dosen()->result();
+        $data['dosen'] = $this->M_Dosen->get_dosen_wali()->result();
         $this->load->view('layout/header_admin');
         $this->load->view('admin/akun_dsn', $data);
         $this->load->view("layout/footer");
@@ -860,6 +850,7 @@ class Admin extends CI_Controller {
             "nip"=>$username,
             "nama"=>$nama,
             "jabatan"=>$jabatan,
+            "status"=>"0",
         ];
 
         $akun = [
@@ -883,5 +874,18 @@ class Admin extends CI_Controller {
         redirect("Admin/akundsn"); 
     }
 
+    public function checkDosen()
+    {
+        $nip = $this->input->get('nip');
+        $if_exists = $this->M_Dosen->getwhere_dosen(array('nip'=>"$nip"))->row()->nama;
+        if (!empty($if_exists)) {
+            $data['cek'] = "exist";
+            $data['nama'] = $if_exists;
+            echo json_encode($data);
+        } else {
+            $data['cek'] = "empty";
+            echo json_encode($data);
+        }
+    }
 
 }

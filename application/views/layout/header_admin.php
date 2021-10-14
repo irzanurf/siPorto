@@ -94,7 +94,7 @@
                                     <div class="col-xl-3 col-6 col-sm-6 col-lg-3">
                                         <div class="card text-white bg-primary ">
                                             <div class="card-body text-center">
-                                            <a href="<?= base_url('Admin/pengumuman');?>" class="btn btn-primary-outline"><i class="fas fa-bullhorn" style="color:white; font-size:7rem"></i>
+                                            <a href="<?= base_url('Admin/pengumuman');?>" class="btn btn-primary-outline"><i class="fas fa-bullhorn" style="color:white; font-size:6rem"></i>
                                             <h5 class="card-title text-white" style="padding-top: 1rem;">Pengumuman</h5>
                                             </a>
                                             </div>
@@ -103,7 +103,7 @@
                                     <div class="col-xl-3 col-6 col-sm-6 col-lg-3">
                                         <div class="card text-white bg-success ">
                                             <div class="card-body text-center">
-                                            <a href="<?= base_url('Admin/datamhs');?>" class="btn btn-primary-outline"><i class="fas fa-newspaper-o" style="color:white; font-size:7rem"></i>
+                                            <a href="<?= base_url('Admin/datamhs');?>" class="btn btn-primary-outline"><i class="fas fa-newspaper-o" style="color:white; font-size:6rem"></i>
                                             <h5 class="card-title text-white" style="padding-top: 1rem;">Portofolio</h5>
                                             </a>
                                             </div>
@@ -112,7 +112,7 @@
                                     <div class="col-xl-3 col-6 col-sm-6 col-lg-3">
                                         <div class="card text-white bg-warning ">
                                             <div class="card-body text-center">
-                                            <a href="<?= base_url('Admin/akunmhs');?>" class="btn btn-warning-outline"><i class="fas fa-user" style="color:white; font-size:7rem"></i>
+                                            <a href="<?= base_url('Admin/akunmhs');?>" class="btn btn-warning-outline"><i class="fas fa-user" style="color:white; font-size:6rem"></i>
                                             <h5 class="card-title text-white" style="padding-top: 1rem;">Akun Mahasiswa</h5>
                                             </a>
                                             </div>
@@ -121,7 +121,7 @@
                                     <div class="col-xl-3 col-6 col-sm-6 col-lg-3">
                                         <div class="card text-white bg-danger ">
                                             <div class="card-body text-center">
-                                            <a href="<?= base_url('Admin/akundsn');?>" class="btn btn-danger-outline"><i class="fas fa-user-secret" style="color:white; font-size:7rem"></i>
+                                            <a href="<?= base_url('Admin/akundsn');?>" class="btn btn-danger-outline"><i class="fas fa-address-book" style="color:white; font-size:6rem"></i>
                                             <h5 class="card-title text-white" style="padding-top: 1rem;">Akun Dosen</h5>
                                             </a>
                                             </div>

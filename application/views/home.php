@@ -211,8 +211,8 @@
                                     <div class="col-sm-6 col-xl-4 col-6 col-lg-4">
                                         <div class="card text-white bg-primary ">
                                             <div class="card-body text-center">
-                                            <a href="<?= base_url('Mhs');?>" class="btn btn-primary-outline"><i class="fas fa-home" style="color:white; font-size:7rem"></i>
-                                            <h5 class="card-title text-white" style="padding-top: 1rem;">Dashboard</h5>
+                                            <a href="<?= base_url('Mhs');?>" class="btn btn-primary-outline"><i class="fas fa-home" style="color:white; font-size:6rem"></i>
+                                            <h6 class="card-title text-white" style="padding-top: 1rem;">Dashboard</h6>
                                             </a>
                                             </div>
                                         </div>
@@ -220,8 +220,8 @@
                                     <div class="col-sm-6 col-xl-4 col-6 col-lg-4">
                                         <div class="card text-white bg-success ">
                                             <div class="card-body text-center">
-                                            <a data-toggle="modal" data-target="#login" href="#login" class="btn btn-primary-outline"><i class="fas fa-user" style="color:white; font-size:7rem"></i>
-                                            <h5 class="card-title text-white" style="padding-top: 1rem;">Data Pribadi</h5>
+                                            <a data-toggle="modal" data-target="#login" href="#login" class="btn btn-primary-outline"><i class="fas fa-user" style="color:white; font-size:6rem"></i>
+                                            <h6 class="card-title text-white" style="padding-top: 1rem;">Data Pribadi</h6>
                                             </a>
                                             </div>
                                         </div>
@@ -229,8 +229,8 @@
                                     <div class="col-sm-12 col-xl-4 col-12 col-lg-4">
                                         <div class="card text-white bg-danger ">
                                             <div class="card-body text-center">
-                                            <a data-toggle="modal" data-target="#login" href="#login" class="btn btn-primary-outline"><i class="fas fa-newspaper-o" style="color:white; font-size:7rem"></i>
-                                            <h5 class="card-title text-white" style="padding-top: 1rem;">Portofolio</h5>
+                                            <a data-toggle="modal" data-target="#login" href="#login" class="btn btn-primary-outline"><i class="fas fa-newspaper-o" style="color:white; font-size:6rem"></i>
+                                            <h6 class="card-title text-white" style="padding-top: 1rem;">Portofolio</h6>
                                             </a>
                                             </div>
                                         </div>
