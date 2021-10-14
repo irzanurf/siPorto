@@ -649,7 +649,7 @@
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                        <button type="submit" class="btn btn-success">Submit</button>
+                                                                        <button type="submit" id="submit_prestasi" class="btn btn-success">Submit</button>
                                                                     </div>
                                                                 </form>
                                                             </div>
@@ -858,7 +858,7 @@
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                        <button type="submit" class="btn btn-success">Submit</button>
+                                                                        <button type="submit" id="submit_magang" class="btn btn-success">Submit</button>
                                                                     </div>
                                                                 </form>
                                                             </div>
@@ -1060,7 +1060,7 @@
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                        <button type="submit" class="btn btn-success">Submit</button>
+                                                                        <button type="submit" id="submit_kegiatan" class="btn btn-success">Submit</button>
                                                                     </div>
                                                                 </form>
                                                             </div>
@@ -1096,11 +1096,32 @@
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                        <button type="submit" class="btn btn-success">Submit</button>
+                                                                        <button type="submit" id="submit_kompetensi" class="btn btn-success">Submit</button>
                                                                     </div>
                                                                 </form>
                                                             </div>
                                                         </div>
                                                     </div>
 
+<!-- Loading Modal-->
+    <div class="modal fade" id="loading" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content text-center">
+                <div class="modal-header text-center">
+                    <h5 class="modal-title text-center" style="color: black; text-align:center" id="exampleModalLabel">Sedang merekam data Anda, mohon tunggu!!</h5>
+                </div>
+                <div class="modal-body"><img id="loading_gif" src="<?= base_url('assets/loading.gif');?>" width="100%"/></div>
+            </div>
+        </div>
+    </div>
+
                                                     
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            $("form").on('submit', function() {
+        // e.preventDefault();
+        $('#loading').modal('show');
+        });
+            });
+    </script>
