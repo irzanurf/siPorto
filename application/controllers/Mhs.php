@@ -122,8 +122,9 @@ class Mhs extends CI_Controller {
         $header['cek'] = "portofolio";
         $header['semester'] = $this->M_Portofolio->get_semester(array('mahasiswa'=>"$username"))->result();
         $header['profile'] = $this->M_Mahasiswa->get_profile(array ('nim'=>"$username"))->row();
+        $data['enc'] = $this->M_Mahasiswa->getwhere_mahasiswa(array('nim'=>"$username"))->row()->enc;
         $this->load->view('layout/header_mhs', $header);
-        $this->load->view('mhs/portofolio');
+        $this->load->view('mhs/portofolio', $data);
         $this->load->view("layout/footer");
     }
 
@@ -156,6 +157,7 @@ class Mhs extends CI_Controller {
         $header['cek'] = "portofolio";
         $header['semester'] = $this->M_Portofolio->get_semester(array('mahasiswa'=>"$username"))->result();
         $header['profile'] = $this->M_Mahasiswa->get_profile(array ('nim'=>"$username"))->row();
+        $data['enc'] = $this->M_Mahasiswa->getwhere_mahasiswa(array('nim'=>"$username"))->row()->enc;
         $data['id_portofolio'] = $id_portofolio;
         $data['semester']=$semester;
         $data['dosen'] = $this->M_Dosen->get_dosen()->result();

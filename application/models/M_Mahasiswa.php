@@ -59,4 +59,21 @@ class M_Mahasiswa extends CI_Model
         return $query;
     }
 
+    public function check_enc($data)
+    {
+        $query = $this->db->select('*')
+        ->from('tb_mahasiswa')
+        ->where($data)
+        ->get();
+        $result = $query->result_array();
+        $count = count($result);
+    
+        if (empty($count)){
+            redirect(base_url('welcome'));
+        }
+        else{
+            // DO NOTHING
+        } 
+    }
+
 }

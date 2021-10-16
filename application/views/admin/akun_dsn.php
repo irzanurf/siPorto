@@ -49,6 +49,7 @@
                                                 <i class="fas fa-fw fa-trash" style="color:white"></i>
                                                 </button>
                                                 </form>
+                                            </td>
 
                                         </tr>
                                         <?php } ?>

@@ -52,6 +52,13 @@
                                                 </button>
                                                 </form>
 
+                                                <form style="display:inline-block;" method="get" target="_blank" action="<?= base_url('cv');?>">
+                                                <input type='hidden' name="c" value="<?= $v->enc ?>">
+                                                <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Buat CV Mahasiswa">
+                                                <i class="fas fa-fw fa-file-text" style="color: white;"></i>
+                                                </button>
+                                                </form>
+
                                         </tr>
                                         <?php } ?>
                                     </tbody>

@@ -785,7 +785,9 @@ class Admin extends CI_Controller {
         $sso = $this->input->post('sso',true);
         $email = $this->input->post('email',true);
         $no_hp = $this->input->post('no_hp',true);
-        
+        $rand=md5(uniqid(rand(), true));
+        $random_id="$username"."$nama"."$rand";
+        $enc = md5($random_id);
         $data = [
             "nim"=>$username,
             "nik"=>$nik,
@@ -798,6 +800,7 @@ class Admin extends CI_Controller {
             "sso"=>$sso,
             "email"=>$email,
             "no_hp"=>$no_hp,
+            "enc"=>$enc
         ];
 
         $akun = [
