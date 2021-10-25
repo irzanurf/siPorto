@@ -23,6 +23,7 @@ class Admin extends CI_Controller {
         $this->load->model('M_Magang');
         $this->load->model('M_Aktivitas');
         $this->load->model('M_Pengumuman');
+        $this->load->helper('file');
         
     }
 
@@ -33,6 +34,72 @@ class Admin extends CI_Controller {
         $this->load->view('layout/header_admin');
         $this->load->view('admin/dashboard', $data);
         $this->load->view("layout/footer");
+    }
+
+    public function import() {
+        $this->load->library('Csvimport');
+        //Check file is uploaded in tmp folder
+        if (is_uploaded_file($_FILES['file']['tmp_name'])) {
+            //validate whether uploaded file is a csv file
+            $csvMimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain');
+            $mime = get_mime_by_extension($_FILES['file']['name']);
+            $fileArr = explode('.', $_FILES['file']['name']);
+            $ext = end($fileArr);
+            if (($ext == 'csv') && in_array($mime, $csvMimes)) {
+                $file = $_FILES['file']['tmp_name'];
+                $csvData = $this->csvimport->get_array($file);
+                
+                        $first = array_key_first($csvData[0]);
+                        foreach ($csvData as $row) {
+                            $cek = $row["$first"];
+                            $tgl_lahir = date('Y-m-d', strtotime($row['Tanggal Lahir']));
+                            $nim = $row["$first"];
+                            $nama = $row['Nama'];
+                            $rand=md5(uniqid(rand(), true));
+                            $random_id="$nim"."$nama"."$rand";
+                            $enc = md5($random_id);
+                            $data = array(
+                                "nim" => $row["$first"],
+                                "nama" => $row['Nama'],
+                                "jenis_kelamin" => $row['Jenis Kelamin'],
+                                "nik" => $row['NIK'],
+                                "doswal" => $row['NIP Dosen Wali'],
+                                "angkatan" => $row['Angkatan'],
+                                "tempat_lahir" => $row['Tempat Lahir'],
+                                "tgl_lahir" => $tgl_lahir,
+                                "alamat" => $row['Alamat'],
+                                "alamat_ortu" => $row['Alamat Orang Tua/Wali'],
+                                "sso" => $row['Email SSO'],
+                                "email" => $row['Email Pribadi'],
+                                "no_hp" => $row['No. HP'],
+                                "enc" => $enc,
+                            );
+                            $akun = [
+                                "username" => $row["$first"],
+                                "password" => md5($row["$first"]),
+                                "role" => "3",
+                            ];
+                            $save = $this->M_Mahasiswa->save($data, $cek, $akun);
+                        }
+                        if ($save==1){
+                            $this->session->set_flashdata('message','<div class="alert alert-success" style="margin-top: 3px">
+                            <div class="header"><center>Data berhasil ter-import</center></div></div>');
+                            redirect("admin/akunmhs"); 
+                        }
+                        else {
+                            $this->session->set_flashdata('message','<div class="alert alert-danger" style="margin-top: 3px">
+                            <div class="header"><b><center><i class="fa fa-exclamation-circle"></i> ERROR</b> Format template tidak sesuai</center></div></div>');
+                            redirect("admin/akunmhs"); 
+                        }
+                    
+                }
+            
+        } else {
+            // $this->session->set_flashdata("error_msg", "Please select a CSV file to upload.");
+            $this->session->set_flashdata('message','<div class="alert alert-danger" style="margin-top: 3px">
+            <div class="header"><b><center><i class="fa fa-exclamation-circle"></i> ERROR</b> Silahkan pilih CSV file terlebih dahulu</center></div></div>');
+            redirect('admin/akunmhs');
+        }
     }
 
     public function datamhs()
@@ -62,6 +129,7 @@ class Admin extends CI_Controller {
         $nim = $this->input->get('nim', true);
         $header['cek'] = "pribadi";
         $header['nim'] = $nim;
+        $data['dosen'] = $this->M_Dosen->get_dosen_wali()->result();
         $data['diri'] = $this->M_Mahasiswa->getwhere_mahasiswa(array('nim'=>"$nim"))->row();
         $this->load->view('layout/header_admin', $header);
         $this->load->view('admin/change_data_pribadi',$data);
@@ -74,6 +142,7 @@ class Admin extends CI_Controller {
         $nim = $this->input->post('nim',true);
         $nik = $this->input->post('nik',true);
         $nama = $this->input->post('nama',true);
+        $jenis_kelamin = $this->input->post('jenis_kelamin',true);
         $konsentrasi = $this->input->post('konsentrasi',true);
         $angkatan = $this->input->post('angkatan',true);
         $tempat_lahir = $this->input->post('tempat_lahir',true);
@@ -87,6 +156,7 @@ class Admin extends CI_Controller {
         $data = [
             "nik"=>$nik,
             "nama"=>$nama,
+            "jenis_kelamin"=>$jenis_kelamin,
             "angkatan"=>$angkatan,
             "konsentrasi"=>$konsentrasi,
             "tempat_lahir"=>$tempat_lahir,
@@ -778,10 +848,12 @@ class Admin extends CI_Controller {
         $nik = $this->input->post('nik',true);
         $doswal = $this->input->post('doswal',true);
         $nama = $this->input->post('nama',true);
+        $jenis_kelamin = $this->input->post('jenis_kelamin',true);
         $angkatan = $this->input->post('angkatan',true);
         $tempat_lahir = $this->input->post('tempat_lahir',true);
         $tgl_lahir = $this->input->post('tgl_lahir',true);
         $alamat = $this->input->post('alamat',true);
+        $alamat_ortu = $this->input->post('alamat_ortu',true);
         $sso = $this->input->post('sso',true);
         $email = $this->input->post('email',true);
         $no_hp = $this->input->post('no_hp',true);
@@ -792,11 +864,13 @@ class Admin extends CI_Controller {
             "nim"=>$username,
             "nik"=>$nik,
             "nama"=>$nama,
+            "jenis_kelamin"=>$jenis_kelamin,
             "doswal"=>$doswal,
             "angkatan"=>$angkatan,
             "tempat_lahir"=>$tempat_lahir,
             "tgl_lahir"=>$tgl_lahir,
             "alamat"=>$alamat,
+            "alamat_ortu"=>$alamat_ortu,
             "sso"=>$sso,
             "email"=>$email,
             "no_hp"=>$no_hp,

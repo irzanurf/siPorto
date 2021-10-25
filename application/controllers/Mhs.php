@@ -69,7 +69,6 @@ class Mhs extends CI_Controller {
     {
         $username = $this->session->userdata('username');
         $nik = $this->input->post('nik',true);
-        $nama = $this->input->post('nama',true);
         $konsentrasi = $this->input->post('konsentrasi',true);
         $angkatan = $this->input->post('angkatan',true);
         $tempat_lahir = $this->input->post('tempat_lahir',true);
@@ -82,7 +81,6 @@ class Mhs extends CI_Controller {
         
         $data = [
             "nik"=>$nik,
-            "nama"=>$nama,
             "konsentrasi"=>$konsentrasi,
             "angkatan"=>$angkatan,
             "tempat_lahir"=>$tempat_lahir,

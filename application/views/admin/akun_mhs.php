@@ -10,6 +10,7 @@
                     <div class="card shadow mb-4">
                         <div class="card-body">
                         <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".tambah-mhs"><i class="fa fa-plus"></i> Tambah</button>
+                        <button class="btn btn-success" type="button" data-toggle="modal" data-target="#import"><i class="fa fa-plus"></i> Import</button>
                         <?php if($this->session->flashdata('message')){echo $this->session->flashdata('message');}?>   
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -78,6 +79,12 @@
                                                                     <input name="nim" class="form-control" value="" required=""><br>
                                                                     <label>Nama</label><label style="color:red; font-size:12px;"> (*Wajib diisi)</label>
                                                                     <input name="nama" class="form-control" value="" required=""><br>
+                                                                    <label>Jenis Kelamin</label><label style="color:red; font-size:12px;"> (*Wajib diisi)</label>
+                                                                        <select class="form-control" style="font-size: 1rem" name="jenis_kelamin" required="">
+                                                                            <option value="">Please Select</option>
+                                                                            <option value="Laki-laki">Laki-laki</option>
+                                                                            <option value="Perempuan">Perempuan</option>
+                                                                        </select><hr>
                                                                     <label>Angkatan</label>
                                                                     <select class="form-control" name="angkatan">
                                                                         <?php
@@ -100,6 +107,8 @@
                                                                     <input type="date" name="tgl_lahir" class="form-control" value=""><br>
                                                                     <label>Alamat</label>
                                                                     <textarea name="alamat" class="form-control" value=""></textarea><br>
+                                                                    <label>Alamat Orang Tua/Wali</label>
+                                                                    <textarea name="alamat_ortu" class="form-control" value=""></textarea><br>
                                                                     <label>Email SSO</label>
                                                                     <input name="sso" class="form-control" value="" ><br>
                                                                     <label>Email Pribadi</label>
@@ -109,9 +118,62 @@
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                        <button type="submit" class="btn btn-success">Submit</button>
+                                                                        <button type="submit" id="submit" class="btn btn-success">Submit</button>
                                                                     </div>
                                                                 </form>
                                                             </div>
                                                         </div>
                                                     </div>
+
+<!-- Modal Import -->
+    <div class="modal fade import" id="import" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h4" id="myLargeModalLabel">Import Mahasiswa</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <form role="form" method="post" action="<?= base_url('admin/import');?>" enctype="multipart/form-data">
+                <div class="modal-body">
+                <h4>Import File CSV</h4>
+                <span style="color: red;">Sebelum mengupload file csv, mohon untuk disesuaikan dengan <a href="<?=base_url('assets/template/template.csv')?>">format terlebih dahulu</a> (perhatikan titik, koma dan titik koma dalam template)</span>
+                <hr>
+                <label>File Csv</label><br>
+                <input type="file" accept=".csv" name="file"><br>
+                <label style="color:red; font-size:12px;">.csv maks 8mb</label><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="submit" class="btn btn-success">Submit</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Modal-->
+    <div class="modal fade" id="loading" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content text-center">
+                <div class="modal-header text-center">
+                    <h5 class="modal-title text-center" style="color: black; text-align:center" id="exampleModalLabel">Sedang meng-import, mohon tunggu!!</h5>
+                </div>
+                <div class="modal-body"><img id="loading_gif" src="<?= base_url('assets/loading.gif');?>" width="100%"/></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            $("form").submit(function() {
+        // e.preventDefault();
+        $('#loading').modal('show');
+        $('#import').modal('hide');
+        $('.tambah-mhs').modal('hide');
+        });
+            });
+    </script> 

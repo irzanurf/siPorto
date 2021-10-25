@@ -175,7 +175,7 @@
                                                 <i class="fas fa-gear" style="color:white;"></i>Menu</a>
                                         </li>
                                         <li>
-                                            <a href="<?= base_url('Admin/pribadi');?>">
+                                            <a href="<?= base_url("Admin/pribadi?nim=$nim");?>">
                                                 <i class="fas"></i>Data Mahasiswa</a>
                                         </li>
                                         <li>

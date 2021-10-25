@@ -263,7 +263,14 @@ function tgl_indo($tanggal){
         $('#qrcode').empty();
 
         // Generate and Output QR Code
-        $('#qrcode').qrcode({width: 128,height: 128,text: $('#url').val()});
+        $('#qrcode').qrcode({
+            width: 128,
+            height: 128,
+            text: $('#url').val(),
+            // src: "<?= base_url('assets/undip.png') ?>",
+            // imgWidth: 50,
+            // imgHeight: 60
+            });
 
         };
     </script>

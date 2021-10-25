@@ -76,4 +76,36 @@ class M_Mahasiswa extends CI_Model
         } 
     }
 
+    public function save($data,$cek,$akun)
+    {
+        $query = $this->db->select('*')
+        ->from('tb_mahasiswa')
+        ->where('nim',"$cek")
+        ->get();
+        $result = $query->result_array();
+        $count = count($result);
+        if (empty($count)){
+            $this->db->insert('tb_mahasiswa',$data);
+        }
+        else{
+            $this->db->where('nim',"$cek");
+            $this->db->update('tb_mahasiswa',$data);
+        } 
+        $account = $this->db->select('*')
+        ->from('tb_users')
+        ->where('username',"$cek")
+        ->get();
+        $result_account = $account->result_array();
+        $count_account = count($result_account);
+        if (empty($count_account)){
+            $this->db->insert('tb_users',$akun);
+        }
+        else{
+            
+        } 
+
+        return 1;
+        
+    }
+
 }

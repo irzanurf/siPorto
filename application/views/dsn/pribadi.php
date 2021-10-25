@@ -46,8 +46,8 @@
                                         </div><br>
                                         <div class="form-row">
                                                 <div class="col-md-4 mb-3">
-                                                    <label>Dosen Wali</label>
-                                                    <textarea class="form-control" disabled><?=$diri->doswal?></textarea>
+                                                    <label>Jenis Kelamin</label>
+                                                    <input class="form-control" value="<?=$diri->jenis_kelamin?>" disabled>
                                                 </div>
                                                 <div class="col-md-4 mb-3">
                                                     <label>Tempat Lahir</label>
@@ -65,6 +65,10 @@
                                         </div><br>
                                         <div class="form-row">
                                                 <div class="col-md-4 mb-3">
+                                                    <label>Dosen Wali</label>
+                                                    <textarea class="form-control" disabled><?=$diri->doswal?></textarea>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
                                                     <label>Alamat</label>
                                                     <textarea class="form-control" disabled><?=$diri->alamat?></textarea>
                                                 </div>
@@ -72,12 +76,12 @@
                                                     <label>Alamat Orang Tua/Wali</label>
                                                     <textarea class="form-control" disabled><?=$diri->alamat_ortu?></textarea>
                                                 </div>
+                                        </div><br>
+                                        <div class="form-row">
                                                 <div class="col-md-4 mb-3">
                                                     <label>No. HP (WA)</label>
                                                     <input class="form-control" value="<?=$diri->no_hp?>" disabled>
                                                 </div>
-                                        </div><br>
-                                        <div class="form-row">
                                                 <div class="col-md-4 mb-3">
                                                     <label>Email SSO</label>
                                                     <input class="form-control" value="<?=$diri->sso?>" disabled>

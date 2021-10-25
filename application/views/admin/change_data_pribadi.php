@@ -62,8 +62,12 @@
                                         </div><br>
                                         <div class="form-row">
                                                 <div class="col-md-4 mb-3">
-                                                    <label>Dosen Wali</label>
-                                                    <textarea class="form-control" disabled><?=$diri->doswal?></textarea>
+                                                    <label>Jenis Kelamin</label>
+                                                    <select class="form-control" style="font-size: 1rem" name="jenis_kelamin" required="">
+                                                        <option value="">Please Select</option>
+                                                        <option value="Laki-laki"<?php echo ($diri->jenis_kelamin=="Laki-laki") ? "selected='selected'" : "" ?>>Laki-laki</option>
+                                                        <option value="Perempuan"<?php echo ($diri->jenis_kelamin=="Perempuan") ? "selected='selected'" : "" ?>>Perempuan</option>
+                                                    </select>
                                                 </div>
                                                 <div class="col-md-4 mb-3">
                                                     <label>Tempat Lahir</label>
@@ -76,6 +80,10 @@
                                         </div><br>
                                         <div class="form-row">
                                                 <div class="col-md-4 mb-3">
+                                                    <label>Dosen Wali</label>
+                                                    <textarea class="form-control" disabled><?=$diri->doswal?></textarea>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
                                                     <label>Alamat</label>
                                                     <textarea name="alamat" class="form-control" ><?=$diri->alamat?></textarea>
                                                 </div>
@@ -83,12 +91,12 @@
                                                     <label>Alamat Orang Tua/Wali</label>
                                                     <textarea name="alamat_ortu" class="form-control" ><?=$diri->alamat_ortu?></textarea>
                                                 </div>
+                                        </div><br>
+                                        <div class="form-row">
                                                 <div class="col-md-4 mb-3">
                                                     <label>No. HP (WA)</label>
                                                     <input type="number" name="no_hp" class="form-control" value="<?=$diri->no_hp?>" >
                                                 </div>
-                                        </div><br>
-                                        <div class="form-row">
                                                 <div class="col-md-4 mb-3">
                                                     <label>Email SSO</label>
                                                     <input name="sso" class="form-control" value="<?=$diri->sso?>" >
